@@ -25,12 +25,12 @@ before_install:
 
 script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb;
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb;
     mkdir surge; mv *.html surge/;
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb;
-    ls /home/travis/build/ecell/ecell4-notebooks; mkdir /home/travis/build/ecell/ecell4-notebooks/surge; mv *.html /home/travis/build/ecell/ecell4-notebooks/surge/; ls /home/travis/build/ecell/ecell4-notebooks/surge/;
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb;
+    mkdir surge; mv *.html surge/;
   fi
   
 deploy:
