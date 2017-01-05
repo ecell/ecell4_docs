@@ -30,7 +30,7 @@ script:
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb;
-    mkdir surge; mv *.html surge/;
+    ls /home/travis/build/ecell/ecell4-notebooks; mkdir /home/travis/build/ecell/ecell4-notebooks/surge; mv *.html /home/travis/build/ecell/ecell4-notebooks/surge/; ls /home/travis/build/ecell/ecell4-notebooks/surge/;
   fi
   
 deploy:
