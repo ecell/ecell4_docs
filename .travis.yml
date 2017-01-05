@@ -25,11 +25,11 @@ before_install:
 
 script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb example7.ipynb example9.ipynb example10.ipynb;
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb example7.ipynb example8.ipynb example10.ipynb;
     mkdir surge; mv *.html surge/;
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb example7.ipynb example9.ipynb example10.ipynb;
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb example7.ipynb example8.ipynb example10.ipynb;
     mkdir surge; mv *.html surge/;
   fi
   
