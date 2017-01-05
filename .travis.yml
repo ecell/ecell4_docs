@@ -37,3 +37,5 @@ deploy:
   provider: surge
   project: ./surge/
   domain: ecell4.surge.sh
+  skip_cleanup: true
+  
