@@ -1,0 +1,39 @@
+dist: trusty
+sudo: false
+matrix:
+  include:
+  - os: linux
+    language: python
+    python: "3.5"
+  - os: osx
+    env: TRAVIS_PYTHON_VERSION="2.7"
+
+addons:
+  apt:
+    packages:
+    - python3
+    - wget
+
+before_install:
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    brew update; brew upgrade;
+    brew install wget; wget https://bootstrap.pypa.io/get-pip.py; python get-pip.py; python -m pip install -U ecell matplotlib jupyter;
+  fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    wget https://bootstrap.pypa.io/get-pip.py; python3 get-pip.py; python3 -m pip install -U ecell matplotlib jupyter;
+  fi
+
+script:
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb;
+    mkdir surge; mv *.html surge/;
+  fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb;
+    mkdir surge; mv *.html surge/;
+  fi
+  
+deploy:
+  provider: surge
+  project: ./surge/
+  domain: ecell4.surge.sh
