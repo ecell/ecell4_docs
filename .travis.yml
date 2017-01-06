@@ -10,10 +10,12 @@ matrix:
 
 addons:
   apt:
+    sources:
+    - sourceline: 'ppa:mc3man/trusty-media'
     packages:
     - python3
     - wget
-    - libav-tools
+    - ffmpeg
 
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
