@@ -5,8 +5,8 @@ matrix:
   - os: linux
     language: python
     python: "3.5"
-#  - os: osx
-#    env: TRAVIS_PYTHON_VERSION="2.7"
+  - os: osx
+    env: TRAVIS_PYTHON_VERSION="2.7"
 
 addons:
   apt:
@@ -18,7 +18,7 @@ addons:
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     brew update; brew upgrade;
-    brew install wget; wget https://bootstrap.pypa.io/get-pip.py; python get-pip.py; python -m pip install -U ecell matplotlib jupyter;
+    brew install wget ffmpeg; wget https://bootstrap.pypa.io/get-pip.py; python get-pip.py; python -m pip install -U ecell matplotlib jupyter;
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     wget https://bootstrap.pypa.io/get-pip.py; python3 get-pip.py; python3 -m pip install -U ecell matplotlib jupyter;
@@ -26,12 +26,13 @@ before_install:
 
 script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb example7.ipynb example10.ipynb;
+#    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb example7.ipynb example10.ipynb;
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' tutorial5.ipynb;
     mkdir surge; mv *.html surge/;
   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
 #    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' index.ipynb tutorial1.ipynb tutorial2.ipynb tutorial3.ipynb tutorial4.ipynb tutorial6.ipynb tutorial7.ipynb tutorial8.ipynb tutorial9.ipynb tutorial10.ipynb example1.ipynb example2.ipynb example3.ipynb example4.ipynb example5.ipynb example6.ipynb example7.ipynb example10.ipynb;
-    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' tutorial5.ipynb
+    jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' tutorial5.ipynb;
     mkdir surge; mv *.html surge/;
   fi
   
