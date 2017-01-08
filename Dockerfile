@@ -1,6 +1,6 @@
 FROM andrewosh/binder-base
 
-MAINTAINER Andrew Osheroff <andrewosh@gmail.com>
+MAINTAINER Kozo Nishida <knishida@riken.jp>
 
 USER root
 
