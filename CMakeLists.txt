@@ -32,7 +32,7 @@ function(preprocess_ipynb out_var)
     file(RELATIVE_PATH out_f ${CMAKE_CURRENT_SOURCE_DIR} ${in_f})
     set(out_f "${CMAKE_CURRENT_BINARY_DIR}/${out_f}")
     add_custom_command(OUTPUT ${out_f}
-      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to notebook --execute --output-dir=${CMAKE_CURRENT_BINARY_DIR} --ExecutePreprocessor.kernel_name='${IPYTHON_KERNEL_NAME}' ${in_f}
+      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to notebook --execute --output-dir=${CMAKE_CURRENT_BINARY_DIR} --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='${IPYTHON_KERNEL_NAME}' ${in_f}
       DEPENDS ${in_f}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Creating preprocessed ipynb file ${out_f}"
@@ -43,6 +43,7 @@ function(preprocess_ipynb out_var)
   set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-file(GLOB IPYNB_FILES *.ipynb)
+file(GLOB IPYNB_FILES tutorial*.ipynb)
 preprocess_ipynb(prep_files ${IPYNB_FILES})
 add_custom_target(ipynb ALL DEPENDS ${prep_files})
+install(FILES ${prep_files} DESTINATION output)
