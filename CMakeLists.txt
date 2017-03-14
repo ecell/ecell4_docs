@@ -22,9 +22,12 @@ endif (DEFINED PYTHON_VERSION_MAJOR AND DEFINED PYTHON_VERSION_MINOR)
 
 find_program(JUPYTER_EXECUTABLE jupyter)
 
+message("JUPYTER_EXECUTABLE=${JUPYTER_EXECUTABLE}")
+
 if (NOT IPYTHON_KERNEL_NAME)
   set(IPYTHON_KERNEL_NAME "python${PYTHON_VERSION_MAJOR}")
 endif (NOT IPYTHON_KERNEL_NAME)
+
 message("IPYTHON_KERNEL_NAME=${IPYTHON_KERNEL_NAME}")
 
 add_custom_target(build_directories ALL
@@ -82,10 +85,8 @@ function(convert_notebooks out_var)
   set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-# file(GLOB IPYNB_FILES time-consuming/example*.ipynb)
-# file(GLOB IPYNB_FILES index.ipynb tutorial1.ipynb Tests/Birth-Death.ipynb)
-# file(GLOB IPYNB_FILES index.ipynb tutorial1.ipynb)
-file(GLOB IPYNB_FILES index.ipynb tutorial*.ipynb example*.ipynb time-consuming/example*.ipynb Tests/*.ipynb)
+file(GLOB IPYNB_FILES en/index.ipynb en/tutorial*.ipynb en/example*.ipynb)
+# file(GLOB IPYNB_FILES en/index.ipynb en/tutorial*.ipynb en/example*.ipynb en/time-consuming/example*.ipynb Tests/*.ipynb)
 
 execute_notebooks(notebooks ${IPYNB_FILES})
 convert_notebooks(rsts ${IPYNB_FILES})
