@@ -42,8 +42,8 @@ script:
     make;
   fi
 
-# deploy:
-#   provider: surge
-#   project: ./build/surge
-#   domain: ecell4.surge.sh
-#   skip_cleanup: true
+deploy:
+  provider: surge
+  project: ./build/surge/en
+  domain: ecell4.surge.sh
+  skip_cleanup: true
