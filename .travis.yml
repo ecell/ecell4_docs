@@ -39,8 +39,6 @@ script:
     cd build;
     cmake -DCMAKE_INSTALL_PREFIX=./surge ..;
     make;
-    # jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python3' *.ipynb;
-    # mkdir surge; mv *.html surge/;
   fi
 
 # deploy:
