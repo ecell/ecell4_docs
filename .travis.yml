@@ -17,6 +17,7 @@ addons:
     - cmake
     - python3
     - wget
+    - pandoc
 #     - ffmpeg
 
 before_install:
