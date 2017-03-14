@@ -66,17 +66,19 @@ function(convert_notebooks out_var)
     file(RELATIVE_PATH rel_path ${CMAKE_CURRENT_SOURCE_DIR} ${in_dir})
     set(tmp_dir "${CMAKE_CURRENT_BINARY_DIR}/temp/${rel_path}")
     set(out_dir "${CMAKE_CURRENT_BINARY_DIR}/release/${rel_path}")
+    # set(ext_name "rst")
+    set(ext_name "html")
 
     string(REGEX REPLACE "\\.[^.]*$" "" out_f ${in_name})
     set(out_d "${out_dir}/${out_f}_files")
-    set(out_f "${out_dir}/${out_f}.rst")
+    set(out_f "${out_dir}/${out_f}.${extname}")
 
     add_custom_command(
       OUTPUT ${out_f} ${out_d}
-      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to rst --output-dir=${out_dir} ${out_dir}/${in_name}
+      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to ${extname} --output-dir=${out_dir} ${out_dir}/${in_name}
       DEPENDS ${in_f} ${out_dir}/${in_name}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-      COMMENT "Translating a notebook in rst ... [${out_f}, ${out_d}]"
+      COMMENT "Translating a notebook in ${extname} ... [${out_f}, ${out_d}]"
       VERBATIM
       )
     list(APPEND result ${out_f})
@@ -89,9 +91,9 @@ file(GLOB IPYNB_FILES en/index.ipynb en/tutorial*.ipynb en/example*.ipynb)
 # file(GLOB IPYNB_FILES en/index.ipynb en/tutorial*.ipynb en/example*.ipynb en/time-consuming/example*.ipynb Tests/*.ipynb)
 
 execute_notebooks(notebooks ${IPYNB_FILES})
-convert_notebooks(rsts ${IPYNB_FILES})
+convert_notebooks(outputs ${IPYNB_FILES})
 
 add_custom_target(notebooks ALL DEPENDS ${notebooks})
-add_custom_target(rsts ALL DEPENDS ${rsts})
+add_custom_target(outputs ALL DEPENDS ${outputs})
 
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}//release/ DESTINATION .)
