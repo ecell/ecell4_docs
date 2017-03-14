@@ -71,14 +71,14 @@ function(convert_notebooks out_var)
 
     string(REGEX REPLACE "\\.[^.]*$" "" out_f ${in_name})
     set(out_d "${out_dir}/${out_f}_files")
-    set(out_f "${out_dir}/${out_f}.${extname}")
+    set(out_f "${out_dir}/${out_f}.${ext_name}")
 
     add_custom_command(
       OUTPUT ${out_f} ${out_d}
-      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to ${extname} --output-dir=${out_dir} ${out_dir}/${in_name}
+      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to ${ext_name} --output-dir=${out_dir} ${out_dir}/${in_name}
       DEPENDS ${in_f} ${out_dir}/${in_name}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-      COMMENT "Translating a notebook in ${extname} ... [${out_f}, ${out_d}]"
+      COMMENT "Translating a notebook in ${ext_name} ... [${out_f}, ${out_d}]"
       VERBATIM
       )
     list(APPEND result ${out_f})
