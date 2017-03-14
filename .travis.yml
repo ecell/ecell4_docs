@@ -12,11 +12,11 @@ addons:
   apt:
 #    sources:
 #    - sourceline: 'ppa:mc3man/trusty-media'
-    packages:
-    - cmake
-    - python3
-    - wget
-#    - ffmpeg
+  packages:
+  - cmake
+  - python3
+  - wget
+#   - ffmpeg
 
 before_install:
 # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -41,9 +41,8 @@ script:
     # mkdir surge; mv *.html surge/;
   fi
 
-deploy:
-  provider: surge
-  project: ./build/surge
-  domain: ecell4.surge.sh
-  skip_cleanup: true
-  
+# deploy:
+#   provider: surge
+#   project: ./build/surge
+#   domain: ecell4.surge.sh
+#   skip_cleanup: true
