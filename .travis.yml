@@ -5,6 +5,9 @@ matrix:
   - os: linux
     language: python
     python: "3.5"
+  - os: linux
+    language: python
+    python: "2.7"
 #   - os: osx
 #     env: TRAVIS_PYTHON_VERSION="2.7"
 
@@ -26,8 +29,8 @@ before_install:
 #   fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     wget https://bootstrap.pypa.io/get-pip.py;
-    python3 get-pip.py;
-    python3 -m pip install -U ecell matplotlib numpy jupyter;
+    python get-pip.py;
+    python -m pip install -U ecell matplotlib numpy jupyter;
   fi
 
 script:
@@ -45,6 +48,6 @@ script:
 
 deploy:
   provider: surge
-  project: ./build/surge/en
+  project: ./build/surge/html/en
   domain: ecell4.surge.sh
   skip_cleanup: true
