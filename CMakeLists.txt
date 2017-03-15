@@ -40,8 +40,8 @@ function(execute_notebooks out_var)
     get_filename_component(in_dir ${in_f} DIRECTORY)
     get_filename_component(in_name ${in_f} NAME)
     file(RELATIVE_PATH rel_path ${CMAKE_CURRENT_SOURCE_DIR} ${in_dir})
-    set(tmp_dir "${CMAKE_CURRENT_BINARY_DIR}/temp/${rel_path}")
-    set(out_dir "${CMAKE_CURRENT_BINARY_DIR}/release/${rel_path}")
+    set(tmp_dir "${CMAKE_CURRENT_BINARY_DIR}/temp/ipynb/${rel_path}")
+    set(out_dir "${CMAKE_CURRENT_BINARY_DIR}/release/ipynb/${rel_path}")
     set(out_f "${out_dir}/${in_name}")
 
     add_custom_command(
@@ -58,16 +58,15 @@ function(execute_notebooks out_var)
   set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-function(convert_notebooks out_var)
+function(convert_notebooks out_var ext_name)
   set(result)
   foreach(in_f ${ARGN})
     get_filename_component(in_dir ${in_f} DIRECTORY)
     get_filename_component(in_name ${in_f} NAME)
     file(RELATIVE_PATH rel_path ${CMAKE_CURRENT_SOURCE_DIR} ${in_dir})
-    set(tmp_dir "${CMAKE_CURRENT_BINARY_DIR}/temp/${rel_path}")
-    set(out_dir "${CMAKE_CURRENT_BINARY_DIR}/release/${rel_path}")
-    # set(ext_name "rst")
-    set(ext_name "html")
+    set(tmp_dir "${CMAKE_CURRENT_BINARY_DIR}/temp/${ext_name}/${rel_path}")
+    set(ipynb_dir "${CMAKE_CURRENT_BINARY_DIR}/release/ipynb/${rel_path}")
+    set(out_dir "${CMAKE_CURRENT_BINARY_DIR}/release/${ext_name}/${rel_path}")
 
     string(REGEX REPLACE "\\.[^.]*$" "" out_f ${in_name})
     set(out_d "${out_dir}/${out_f}_files")
@@ -75,8 +74,8 @@ function(convert_notebooks out_var)
 
     add_custom_command(
       OUTPUT ${out_f} ${out_d}
-      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to ${ext_name} --output-dir=${out_dir} ${out_dir}/${in_name}
-      DEPENDS ${in_f} ${out_dir}/${in_name}
+      COMMAND ${JUPYTER_EXECUTABLE} nbconvert --to ${ext_name} --output-dir=${out_dir} ${ipynb_dir}/${in_name}
+      DEPENDS ${in_f} ${ipynb_dir}/${in_name}
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Translating a notebook in ${ext_name} ... [${out_f}, ${out_d}]"
       VERBATIM
@@ -87,13 +86,18 @@ function(convert_notebooks out_var)
   set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-file(GLOB IPYNB_FILES en/index.ipynb en/tutorial*.ipynb en/example*.ipynb)
 # file(GLOB IPYNB_FILES en/index.ipynb en/tutorial*.ipynb en/example*.ipynb en/time-consuming/example*.ipynb Tests/*.ipynb)
+file(GLOB IPYNB_FILES
+    en/index.ipynb
+    en/tutorials/tutorial[1-4].ipynb en/tutorials/tutorial[8-9].ipynb en/tutorials/tutorial10.ipynb
+    en/examples/example[1-6].ipynb en/examples/example1[0-1].ipynb)
 
 execute_notebooks(notebooks ${IPYNB_FILES})
-convert_notebooks(outputs ${IPYNB_FILES})
+convert_notebooks(rsts rst ${IPYNB_FILES})
+convert_notebooks(htmls html ${IPYNB_FILES})
 
 add_custom_target(notebooks ALL DEPENDS ${notebooks})
-add_custom_target(outputs ALL DEPENDS ${outputs})
+add_custom_target(rsts ALL DEPENDS ${rsts})
+add_custom_target(htmls ALL DEPENDS ${htmls})
 
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}//release/ DESTINATION .)
