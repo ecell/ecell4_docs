@@ -1,4 +1,4 @@
-.. image:: ./images/ecell-logo-with-title.png
+.. image:: http://ecell4.readthedocs.io/en/latest/_images/ecell-logo-with-title.png
 
 E-Cell System version 4 日本語ドキュメント
 =================================================
