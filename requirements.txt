@@ -1,2 +1,7 @@
-matplotlib==2.1.0
+matplotlib
+nbsphinx
+recommonmark
+numpydoc
+ipython
+pip>=8.1.2
 ecell
