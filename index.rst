@@ -8,7 +8,7 @@ E-Cell4は、GNU General Public Licenseバージョン2の下でライセンス�
 `GitHub <https://github.com/ecell/ecell4>`__
 で入手できます。
 
-**インストール手順** については、https：//github.com/ecell/ecell4を参照してください。
+**インストール手順** については、https://github.com/ecell/ecell4 を参照してください。
 
 Tutorials
 ---------
