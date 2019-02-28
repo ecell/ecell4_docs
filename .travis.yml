@@ -30,7 +30,7 @@ before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     wget https://bootstrap.pypa.io/get-pip.py;
     python get-pip.py;
-    python -m pip install -U ecell matplotlib numpy jupyter;
+    python -m pip install -U ecell4 matplotlib numpy jupyter;
   fi
 
 script:
