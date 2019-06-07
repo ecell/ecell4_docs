@@ -1,3 +1,4 @@
+breathe
 matplotlib
 nbsphinx
 recommonmark
