@@ -1,53 +1,22 @@
-dist: trusty
-sudo: false
-matrix:
-  include:
-  - os: linux
-    language: python
-    python: "3.5"
-  - os: linux
-    language: python
-    python: "2.7"
-#   - os: osx
-#     env: TRAVIS_PYTHON_VERSION="2.7"
-
-addons:
-  apt:
-    sources:
-#    - sourceline: 'ppa:mc3man/trusty-media'
-    - ubuntu-toolchain-r-test
-    packages:
-    - cmake
-    - python3
-    - wget
-    - pandoc
-#     - ffmpeg
-
-before_install:
-# - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-#     brew update; brew install wget; wget https://bootstrap.pypa.io/get-pip.py; python get-pip.py; python -m pip install -U ecell matplotlib jupyter;
-#   fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    wget https://bootstrap.pypa.io/get-pip.py;
-    python get-pip.py;
-    python -m pip install -U ecell4 matplotlib numpy jupyter;
-  fi
+dist: xenial
+language: python
+python:
+  - "3.7"
+install:
+  - sudo apt-get update
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+  - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f environment.yml
+  - source activate test-environment
+  - conda config --add channels conda-forge
 
 script:
-# - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-#     jupyter nbconvert --to=html --ExecutePreprocessor.enabled=True --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name='python2' *.ipynb;
-#     mkdir surge; mv *.html surge/;
-#   fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    mkdir build;
-    cd build;
-    cmake -DCMAKE_INSTALL_PREFIX=./surge ..;
-    make;
-    make install;
-  fi
-
-deploy:
-  provider: surge
-  project: ./build/surge/html/en
-  domain: ecell4.surge.sh
-  skip_cleanup: true
+  - py.test
