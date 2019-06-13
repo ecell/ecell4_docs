@@ -1,4 +1,4 @@
-.. image:: ./images/ecell-logo-with-title.png
+.. image:: ./ecell-logo-with-title.png
 
 E-Cell System version 4 API reference
 =================================================
