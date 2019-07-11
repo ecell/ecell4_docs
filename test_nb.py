@@ -1,13 +1,14 @@
 import subprocess
-import tempfile
+import os
 
 
 def _exec_notebook(path):
-    with tempfile.NamedTemporaryFile(suffix=".ipynb") as fout:
-        args = ["jupyter", "nbconvert", "--to", "notebook", "--execute",
-                "--ExecutePreprocessor.timeout=1000",
-                "--output", fout.name, path]
-        subprocess.check_call(args)
+    outfile = os.path.join(os.path.abspath('temp'), 'nb', path)
+    os.makedirs(os.path.dirname(outfile), exist_ok=True)
+    args = ["jupyter", "nbconvert", "--to", "notebook", "--execute",
+            "--ExecutePreprocessor.timeout=1000",
+            "--output", outfile, path]
+    subprocess.check_call(args)
 
 
 def test_en_tutotiral1():
