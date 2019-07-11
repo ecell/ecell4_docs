@@ -20,4 +20,4 @@ install:
 
 script:
   - py.test
-  - find /tmp -name "*.ipynb"
+  - find ./temp -name "*.ipynb"
