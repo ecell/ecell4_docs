@@ -20,3 +20,11 @@ install:
 
 script:
   - py.test
+  - find ./temp -name "*.ipynb"
+  - jupyter nbconvert --to html ./temp/nb/en/tutorials/*.ipynb
+
+deploy:
+  provider: surge
+  project: ./temp/nb/en/tutorials/
+  domain: ecell4.surge.sh
+  skip_cleanup: true
