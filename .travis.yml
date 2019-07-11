@@ -20,4 +20,4 @@ install:
 
 script:
   - py.test
-  - ls /tmp
+  - find /tmp -name "*.ipynb"
