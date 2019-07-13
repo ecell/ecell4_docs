@@ -2,7 +2,7 @@
 
 ![banner](./ecell-logo-with-title.png)
 
-[![Build Status](https://travis-ci.org/ecell/ecell4-docs.svg?branch=master)](https://travis-ci.org/ecell/ecell4-docs)
+[![Build Status](https://travis-ci.org/ecell/ecell4_docs.svg?branch=master)](https://travis-ci.org/ecell/ecell4_docs)
 [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/ecell/ecell4-notebooks/master)
 
 ## Tutorials
