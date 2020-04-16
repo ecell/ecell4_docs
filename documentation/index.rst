@@ -7,7 +7,7 @@ The E-Cell System is a software platform for modeling, simulation and analysis o
 
 Its latest version, E-Cell4, is a free and open-source software licensed under the GNU General Public License version 2. The source code is available on `GitHub <https://github.com/ecell/ecell4>`__ and `GitHub <https://github.com/ecell/ecell4_base>`__.
 
-<!-- Please refer to https://github.com/ecell/ecell4 for information about **installation instructions**. -->
+.. Please refer to https://github.com/ecell/ecell4 for information about **installation instructions**.
 
 .. toctree::
    :maxdepth: 2
