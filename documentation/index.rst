@@ -35,6 +35,5 @@ Please refer to https://github.com/ecell/ecell4 for information about **installa
 .. toctree::
    :maxdepth: 2
    :caption: API:
-   :glob:
 
-   api/*
+   api/ecell4_base.rst
