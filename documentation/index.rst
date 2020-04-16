@@ -32,19 +32,9 @@ Please refer to https://github.com/ecell/ecell4 for information about **installa
 
    examples/index
 
-API
----
-
 .. toctree::
+   :maxdepth: 2
+   :caption: API:
    :glob:
 
-   api/core
-   api/gillespie
-   api/ode
-   api/meso
-   api/spatiocyte
-   api/bd
-   api/egfrd
-   api/util
-   api/util.viz
-   api/util.decorator
+   api/*
