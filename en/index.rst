@@ -24,15 +24,10 @@ Its latest version, E-Cell4, is a free and open-source software licensed under t
 
 .. toctree::
    :maxdepth: 2
-   :caption: Tests:
-
-   tests/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Examples:
+   :caption: Models:
 
    examples/index
+   tests/index
 
 .. toctree::
    :maxdepth: 2
