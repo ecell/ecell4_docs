@@ -2,7 +2,9 @@ Tutorials
 =========
 
 .. toctree::
+   :maxdepth: 2
    :glob:
+
    tutorial1
    tutorial2
    tutorial3
