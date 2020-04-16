@@ -1,7 +1,11 @@
 import sys
 import os
 
-extensions = ['nbsphinx', 'sphinx.ext.autodoc', 'sphinx.ext.autosummary', 'numpydoc', 'IPython.sphinxext.ipython_console_highlighting', 'IPython.sphinxext.ipython_directive']
+extensions = [
+    'nbsphinx', 'sphinx.ext.autodoc', 'sphinx.ext.autosummary',
+    'IPython.sphinxext.ipython_console_highlighting', 'IPython.sphinxext.ipython_directive',
+    'numpydoc',
+]
 
 templates_path = ['_templates']
 
@@ -31,33 +35,27 @@ html_show_sourcelink = True
 htmlhelp_basename = 'Testdoc'
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
-
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
-
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
-
-# Latex figure (float) alignment
-#'figure_align': 'htbp',
+#     # The paper size ('letterpaper' or 'a4paper').
+#     'papersize': 'letterpaper',
+#     # The font size ('10pt', '11pt' or '12pt').
+#     'pointsize': '10pt',
+#     # Additional stuff for the LaTeX preamble.
+#     'preamble': '',
+#     # Latex figure (float) alignment
+#     'figure_align': 'htbp',
 }
 
 latex_documents = [
-  (master_doc, 'Test.tex', u'Test Documentation',
-   u'Test', 'manual'),
+    (master_doc, 'Test.tex', u'Test Documentation', u'Test', 'manual'),
 ]
 
 man_pages = [
-    (master_doc, 'test', u'Test Documentation',
-     [author], 1)
+    (master_doc, 'test', u'Test Documentation', [author], 1)
 ]
 
 texinfo_documents = [
-  (master_doc, 'Test', u'Test Documentation',
-   author, 'Test', 'One line description of project.',
-   'Miscellaneous'),
+  (master_doc, 'Test', u'Test Documentation', author, 'Test', 'One line description of project.',
+      'Miscellaneous'),
 ]
 
 from recommonmark.parser import CommonMarkParser
@@ -66,5 +64,5 @@ from recommonmark.parser import CommonMarkParser
 source_suffix = ['.rst', '.md']
 
 source_parsers = {
-	'.md': CommonMarkParser,
+    '.md': CommonMarkParser,
 }
