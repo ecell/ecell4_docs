@@ -1,5 +1,7 @@
 # ecell4_docs
 
+[![Documentation Status](https://readthedocs.org/projects/ecell4/badge/?version=latest)](https://ecell4.readthedocs.io/en/latest/?badge=latest)
+
 See [https://ecell4.readthedocs.io/en/latest/](https://ecell4.readthedocs.io/en/latest/).
 
 <!--
