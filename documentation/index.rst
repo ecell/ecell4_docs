@@ -36,5 +36,6 @@ Please refer to https://github.com/ecell/ecell4 for information about **installa
    :maxdepth: 2
    :caption: API:
 
-   api/ecell4.rst
-   api/ecell4_base.rst
+   api/ecell4
+   api/ecell4_base
+   api/index

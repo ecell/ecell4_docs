@@ -1,12 +1,10 @@
 ecell4_base module
 ==================
 
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. automodule:: ecell4_base
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 ecell4_base.core submodule
 --------------------------
