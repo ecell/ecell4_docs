@@ -20,7 +20,7 @@ release = '2.0.0'
 
 language = None
 
-exclude_patterns = ['_build']
+exclude_patterns = ['_build', '**.ipynb_checkpoints']
 
 pygments_style = 'sphinx'
 
