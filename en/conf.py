@@ -9,7 +9,7 @@ extensions = [
 
 templates_path = ['_templates']
 
-master_doc = 'documentation/index'
+master_doc = 'index'
 
 project = u'E-Cell4'
 copyright = u'2015-, E-Cell project'
