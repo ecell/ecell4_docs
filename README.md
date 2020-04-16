@@ -1,6 +1,7 @@
 # ecell4_docs
 
 [![Documentation Status](https://readthedocs.org/projects/ecell4/badge/?version=latest)](https://ecell4.readthedocs.io/en/latest/?badge=latest)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ecell/ecell4_docs/master)
 
 See [https://ecell4.readthedocs.io/en/latest/](https://ecell4.readthedocs.io/en/latest/).
 
@@ -9,7 +10,6 @@ See [https://ecell4.readthedocs.io/en/latest/](https://ecell4.readthedocs.io/en/
 ![banner](./ecell-logo-with-title.png)
 
 [![Build Status](https://travis-ci.org/ecell/ecell4_docs.svg?branch=master)](https://travis-ci.org/ecell/ecell4_docs)
-[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/ecell/ecell4-notebooks/master)
 
 ## Tutorials
 
