@@ -2,7 +2,7 @@
 
 [![Documentation Status](https://readthedocs.org/projects/ecell4/badge/?version=latest)](https://ecell4.readthedocs.io/en/latest/?badge=latest)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ecell/ecell4_docs/master)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ecell/ecell4_docs/]
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ecell/ecell4_docs/)
 
 See [https://ecell4.readthedocs.io/en/latest/](https://ecell4.readthedocs.io/en/latest/).
 
