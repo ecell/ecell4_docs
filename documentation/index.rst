@@ -20,22 +20,11 @@ Please refer to https://github.com/ecell/ecell4 for information about **installa
 
    top
 
-Tutorials
----------
-
 .. toctree::
-   :glob:
-   
-   tutorials/tutorial1
-   tutorials/tutorial2
-   tutorials/tutorial3
-   tutorials/tutorial4
-   tutorials/tutorial5
-   tutorials/tutorial6
-   tutorials/tutorial7
-   tutorials/tutorial8
-   tutorials/tutorial9
-   tutorials/tutorial10
+   :maxdepth: 2
+   : caption Tutorials:
+
+   tutorials/index
 
 Examples
 --------
