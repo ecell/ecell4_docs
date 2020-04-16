@@ -16,35 +16,21 @@ Please refer to https://github.com/ecell/ecell4 for information about **installa
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Top:
 
    top
 
-Tutorials
----------
-
 .. toctree::
    :maxdepth: 2
+   :caption: Tutorials:
 
    tutorials/index
 
-Examples
---------
-
 .. toctree::
-   :glob:
-   
-   examples/example1
-   examples/example2
-   examples/example3
-   examples/example4
-   examples/example5
-   examples/example6
-   examples/example7
-   examples/example8
-   examples/example9
-   examples/example10
-   examples/example11
+   :maxdepth: 2
+   :caption: Examples:
+
+   examples/index
 
 API
 ---
