@@ -22,5 +22,6 @@ python:
   version: 3.7
   install:
   install:
+    - requirements: ./en/requirements.txt
     - requirements: ./requirements.txt
   system_packages: true
