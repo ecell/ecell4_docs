@@ -1,5 +1,5 @@
 ecell4 module
-=============
+===============
 
 .. automodule:: ecell4
    :members:
@@ -7,7 +7,7 @@ ecell4 module
    :show-inheritance:
 
 ecell4.util submodule
----------------------
+------------------------
 
 .. automodule:: ecell4.util
    :members:
@@ -15,7 +15,7 @@ ecell4.util submodule
    :show-inheritance:
 
 ecell4.datasource submodule
----------------------
+-----------------------------
 
 .. automodule:: ecell4.datasource
    :members:
@@ -23,9 +23,14 @@ ecell4.datasource submodule
    :show-inheritance:
 
 ecell4.extra submodule
----------------------
+------------------------
 
-.. automodule:: ecell4.extra
+.. automodule:: ecell4.extra.ensemble
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: ecell4.extra.unit
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +44,7 @@ ecell4.mca submodule
    :show-inheritance:
 
 ecell4.plotting submodule
--------------------------
+---------------------------
 
 .. automodule:: ecell4.plotting
    :members:
