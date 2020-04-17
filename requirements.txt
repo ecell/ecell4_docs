@@ -5,4 +5,5 @@ recommonmark
 numpydoc
 ipython
 pip>=8.1.2
-ecell4
+ecell4_base
+-e git+https://github.com/ecell/ecell4.git@v1.2.0#egg=ecell4-1.2.0
