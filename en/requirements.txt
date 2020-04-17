@@ -1,4 +1,4 @@
 matplotlib
 pint
 ecell4_base
--e git+https://github.com/kaizu/ecell4.git@v1.2.0#egg=ecell4-1.2.0
+-e git+https://github.com/kaizu/ecell4.git@v1.2.0#egg=ecell4
