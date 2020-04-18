@@ -12,7 +12,9 @@ nbsphinx_prolog = r"""
 
 .. only:: html
 
-   .. nbinfo::
+   .. seealso::
+
+      Hoge
 
       This page was generated from `{{ path }} <https://github.com/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`
 
