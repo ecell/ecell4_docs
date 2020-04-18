@@ -15,8 +15,11 @@ nbsphinx_prolog = r"""
    .. nbinfo::
 
       Download the `Jupyter Notebook <https://jupyter.org/>`_ for this section: :download:`{{ path.rsplit('/', 1)[1] }} </{{ path.replace('_notebooks', '_downloads') }}>`
-      
-      Test {{ env.docname }}
+
+   .. nbinfo::
+
+      Test1 {{ env.docname }}
+      Test2 {{ path }}
 """
 
 nbsphinx_epilog = r""
