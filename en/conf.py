@@ -22,7 +22,7 @@ nbsphinx_prolog = r"""
 
    .. nbinfo::
 
-      .. |Open In Colab| image:: https://colab.research.google.com/assets/colab-badge.svg
+      .. image:: https://colab.research.google.com/assets/colab-badge.svg
          :target: https://colab.research.google.com/github/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}
 
 """
@@ -37,8 +37,8 @@ project = u'E-Cell4'
 copyright = u'2015-, E-Cell project'
 author = u'Kazunari Kaizu'
 
-version = '2.0.0'
-release = '2.0.0'
+version = '1.0.0'
+release = 'latest'
 
 language = None
 
