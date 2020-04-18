@@ -14,12 +14,11 @@ nbsphinx_prolog = r"""
 
    .. nbinfo::
 
-      Download the `Jupyter Notebook <https://jupyter.org/>`_ for this section: :download:`{{ path.rsplit('/', 1)[1] }} </{{ path.replace('_notebooks', '_downloads') }}>`
+      Download the `Jupyter Notebook <https://jupyter.org/>`_ for this section: :download:`{{ path.rsplit('/', 1)[1] }} <https://github.com/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`_
 
    .. nbinfo::
 
-      Test1 {{ env.docname }}
-      Test2 {{ path }}
+      Download the `Jupyter Notebook <https://jupyter.org/>`_ for this section: :download:`{{ path.rsplit('/', 1)[1] }} <https://colab.research.google.com/github/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`_
 """
 
 nbsphinx_epilog = r""
