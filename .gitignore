@@ -1,2 +1,7 @@
 .DS_Store
 *.swp
+
+en/tutorials/*.h5
+en/tutorials/*.csv
+en/tutorials/.ipynb_checkpoints
+en/examples/.ipynb_checkpoints
