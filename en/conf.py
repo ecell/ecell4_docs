@@ -12,11 +12,13 @@ nbsphinx_prolog = r"""
 
 .. only:: html
 
-   .. seealso::
+   .. nbinfo::
 
       This page was generated from `{{ path }} <https://github.com/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`_.
+
       Download the `Jupyter Notebook <https://jupyter.org/>`_ for this section: :download:`{{ path.rsplit('/', 1)[1] }} </{{ path.replace('_notebooks', '_downloads') }}>`.
-      `View in nbviewer<https://nbviewer.jupyter.org/github/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`_.
+
+      `View in nbviewer <https://nbviewer.jupyter.org/github/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`_.
 
       .. image:: https://colab.research.google.com/assets/colab-badge.svg
          :target: https://colab.research.google.com/github/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}
