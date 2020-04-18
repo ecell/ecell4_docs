@@ -7,40 +7,19 @@ extensions = [
     'numpydoc',
 ]
 
-templates_path = ['_templates']
-
-
-# This is processed by Jinja2 and inserted before each notebook
 nbsphinx_prolog = r"""
-{% set docname = 'doc/' + env.doc2path(env.docname, base=None) %}
-.. raw:: html
-    <div class="admonition note">
-      <p>This page was generated from
-        <a class="reference external" href="https://github.com/kaizu/ecell4_doc/blob/{{ env.config.release|e }}/{{ docname|e }}">{{ docname|e }}</a>.
-        Interactive online version:
-        <a href="https://mybinder.org/v2/gh/kaizu/ecell4_doc/{{ env.config.release|e }}?filepath={{ docname|e }}"><img alt="Binder badge" src="https://mybinder.org/badge_logo.svg" style="vertical-align:text-bottom"></a>.
-      </p>
-      <script>
-        if (document.location.host) {
-          var p = document.currentScript.previousSibling.previousSibling;
-          var a = document.createElement('a');
-          a.innerHTML = 'View in <em>nbviewer</em>';
-          a.href = `https://nbviewer.jupyter.org/url${
-            (window.location.protocol == 'https:' ? 's/' : '/') +
-            window.location.host +
-            window.location.pathname.slice(0, -4) }ipynb`;
-          a.classList.add('reference');
-          a.classList.add('external');
-          p.appendChild(a);
-          p.appendChild(document.createTextNode('.'));
-        }
-      </script>
-    </div>
-.. raw:: latex
-    \nbsphinxstartnotebook{\scriptsize\noindent\strut
-    \textcolor{gray}{The following section was generated from
-    \sphinxcode{\sphinxupquote{\strut {{ docname | escape_latex }}}} \dotfill}}
+{% set path = env.doc2path(env.docname, base=None).replace('\\', '/') %}
+
+.. only:: html
+
+   .. nbinfo::
+
+      Download the `Jupyter Notebook <https://jupyter.org/>`_ for this section: :download:`{{ path.rsplit('/', 1)[1] }} </{{ path.replace('_notebooks', '_downloads') }}>`
 """
+
+nbsphinx_epilog = r""
+
+templates_path = ['_templates']
 
 master_doc = 'index'
 
