@@ -14,12 +14,14 @@ nbsphinx_prolog = r"""
 
    .. nbinfo::
 
-      This page was generated from `{{ path }} <https://github.com/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`.
+      This page was generated from `{{ path }} <https://github.com/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}>`
 
       Download the `Jupyter Notebook <https://jupyter.org/>`_ for this section: :download:`{{ path.rsplit('/', 1)[1] }} </{{ path.replace('_notebooks', '_downloads') }}>`
 
       .. image:: https://colab.research.google.com/assets/colab-badge.svg
          :target: https://colab.research.google.com/github/kaizu/ecell4_docs/blob/{{ env.config.release|e }}/en/{{ path|e }}
+      .. image:: https://mybinder.org/badge_logo.svg
+         :target: https://mybinder.org/v2/gh/kaizu/ecell4_docs/{{ env.config.release|e }}?filepath=en/{{ path|e }}
 
 """
 
