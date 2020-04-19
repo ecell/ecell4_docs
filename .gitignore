@@ -4,4 +4,5 @@
 en/tutorials/*.h5
 en/tutorials/*.csv
 en/tutorials/.ipynb_checkpoints
+en/examples/*.h5
 en/examples/.ipynb_checkpoints
