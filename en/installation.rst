@@ -6,15 +6,16 @@ Here shows how to install the E-Cell System version 4.
 Installation
 --------------
 
-E-Cell4 does not support Python2.
+E-Cell4 does NOT support Python2 and Python3 32-bit.
 
-E-Cell4 does not support :code:`pip install` on Windows and Mac.
+E-Cell4 (`ecell4_base <https://github.com/ecell/ecell4_base>`__) package does NOT support :code:`pip install` on Windows and Mac. Please use :code:`conda` instead.
 
 Windows
 ^^^^^^^^
 
 Install Miniconda with Python 3.7 for **64-bit** (from https://docs.conda.io/en/latest/miniconda.html)
-and run this command on **Anaconda Prompt**.
+and run this command on **Anaconda Prompt** 
+(On Windows, Start Menu -> Anaconda3 (64-bit) -> Anaconda Prompt or Anaconda Powershell Prompt).
 
 :: 
 
@@ -23,7 +24,7 @@ and run this command on **Anaconda Prompt**.
 Mac, Linux
 ^^^^^^^^^^^^
 
-Install Miniconda with Python 3.7 for **64-bit** (from https://docs.conda.io/en/latest/miniconda.html)
+Install Miniconda with Python 3.7 for **64-bit** (from https://docs.conda.io/en/latest/miniconda.html).
 and run these commands on your Terminal app.
 
 :: 
@@ -33,6 +34,10 @@ and run these commands on your Terminal app.
 
 Linux environment where you can NOT use conda
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We provide `ecell4_base <https://github.com/ecell/ecell4_base>`__ **wheel** package only for Linux.
+
+(On Linux) You can install (or upgrade) `ecell4_base <https://github.com/ecell/ecell4_base>`__ and `ecell4 <https://github.com/ecell/ecell4_base>`__ with
 
 :: 
 
