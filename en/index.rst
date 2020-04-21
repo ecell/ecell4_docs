@@ -52,8 +52,8 @@ If this package contributes to a project which leads to a scientific publication
 Licensing terms
 ----------------
 
-This product is licensed under the terms of the `GNU General Public License v3 <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__,
-See also `LICENSE <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__ for the software included in this product.
+This product is licensed under the terms of the `GNU General Public License v3 <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__. 
+See also `LICENSE <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__ for the software included in this product
 
 - Copyright (c) 2010-, RIKEN
 
