@@ -8,7 +8,7 @@ Installation
 
 E-Cell4 does not support Python2.
 
-E-Cell4 does not support `pip install` on Windows and Mac.
+E-Cell4 does not support :code:`pip install` on Windows and Mac.
 
 Windows
 ^^^^^^^^
@@ -16,9 +16,8 @@ Windows
 Install Miniconda with Python 3.7 for **64-bit** (from https://docs.conda.io/en/latest/miniconda.html)
 and run this command on **Anaconda Prompt**.
 
-```
-conda install -c ecell ecell4
-```
+::
+    conda install -c ecell ecell4
 
 Mac, Linux
 ^^^^^^^^^^^^
@@ -26,14 +25,12 @@ Mac, Linux
 Install Miniconda with Python 3.7 for **64-bit** (from https://docs.conda.io/en/latest/miniconda.html)
 and run these commands on your Terminal app.
 
-```
-conda config --add channels conda-forge
-conda install -c ecell ecell4
-```
+::
+    conda config --add channels conda-forge
+    conda install -c ecell ecell4
 
 Linux environment where you can NOT use conda
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-```
-python3 -m pip install ecell4
-```
+::
+    python3 -m pip install ecell4
