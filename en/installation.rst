@@ -16,7 +16,8 @@ Windows
 Install Miniconda with Python 3.7 for **64-bit** (from https://docs.conda.io/en/latest/miniconda.html)
 and run this command on **Anaconda Prompt**.
 
-::
+:: 
+
     conda install -c ecell ecell4
 
 Mac, Linux
@@ -25,12 +26,14 @@ Mac, Linux
 Install Miniconda with Python 3.7 for **64-bit** (from https://docs.conda.io/en/latest/miniconda.html)
 and run these commands on your Terminal app.
 
-::
+:: 
+
     conda config --add channels conda-forge
     conda install -c ecell ecell4
 
 Linux environment where you can NOT use conda
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+:: 
+
     python3 -m pip install ecell4
