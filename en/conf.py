@@ -10,6 +10,11 @@ extensions = [
 nbsphinx_prolog = r"""
 {% set path = env.doc2path(env.docname, base=None).replace('\\', '/') %}
 
+.. raw:: html
+
+   <script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+   <script>require=requirejs;</script>
+
 .. only:: html
 
    .. seealso::
