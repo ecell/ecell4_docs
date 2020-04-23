@@ -72,7 +72,7 @@ If this package contributes to a project which leads to a scientific publication
    :target: https://zenodo.org/badge/latestdoi/6348303
 
 ****************
-Licensing terms
+Licensing Terms
 ****************
 
 This product is licensed under the terms of the `GNU General Public License v3 <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__.
