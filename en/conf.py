@@ -63,7 +63,7 @@ html_theme_options = {
 
 html_sidebars = {
     '**': [
-        'github.html',
+        'logo.html',
         'globaltoc.html',
         'searchbox.html',
         ]
