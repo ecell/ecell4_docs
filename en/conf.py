@@ -55,7 +55,7 @@ pygments_style = 'sphinx'
 
 html_theme = 'sphinx_typlog_theme'
 html_theme_options = {
-    'logo_name': 'ecell4'
+    'logo_name': 'ecell4',
     'collapse_navigation' : False,
     'navigation_with_keys': True,
     'description': 'The E-Cell System version 4',
