@@ -3,9 +3,13 @@ Installation of the E-Cell System Version 4
 
 Here shows how to install the E-Cell System version 4.
 
-E-Cell4 does NOT support Python2 and Python3 32-bit.
+.. warning::
 
-E-Cell4 (`ecell4_base <https://github.com/ecell/ecell4_base>`__) package does NOT support :code:`pip install` on Windows and Mac. Please use :code:`conda` instead.
+   E-Cell4 does NOT support Python2 and Python3 32-bit.
+
+.. warning::
+
+   E-Cell4 (`ecell4_base <https://github.com/ecell/ecell4_base>`__) package does NOT support :code:`pip install` on Windows and Mac. Please use :code:`conda` instead.
 
 Windows
 --------
@@ -39,3 +43,4 @@ We provide `ecell4_base <https://github.com/ecell/ecell4_base>`__ **wheel** pack
 :: 
 
     python3 -m pip install ecell4
+
