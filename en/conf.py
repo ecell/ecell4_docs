@@ -66,7 +66,10 @@ html_theme_options = {
 html_sidebars = {
     '**': [
         'logo.html',
-        'globaltoc.html',
+        'localtoc.html',
+        # 'globaltoc.html',
+        'relations.html',
+        # 'sourcelink.html',
         'searchbox.html',
         ]
     }
