@@ -49,10 +49,25 @@ exclude_patterns = ['_build', '**.ipynb_checkpoints']
 
 pygments_style = 'sphinx'
 
-import sphinx_rtd_theme
+# import sphinx_rtd_theme
 # html_theme = "sphinx_rtd_theme"
 # html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
 html_theme = 'sphinx_typlog_theme'
+html_theme_options = {
+    'navigation_with_keys': True,
+    'description': 'The E-Cell System version 4',
+    'github_user': 'ecell',
+    'github_repo': 'ecell4_doc'
+    }
+
+html_sidebars = {
+    '**': [
+        'github.html',
+        'globaltoc.html',
+        'searchbox.html',
+        ]
+    }
 
 html_static_path = ['_static']
 
