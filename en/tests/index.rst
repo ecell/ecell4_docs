@@ -1,6 +1,5 @@
 .. toctree::
    :maxdepth: 2
-   :caption: Tests
    :glob:
 
    Birth_Death

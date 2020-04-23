@@ -42,8 +42,14 @@ Models
 
 .. toctree::
    :maxdepth: 1
+   :caption: Examples
 
    examples/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tests
+
    tests/index
 
 ***************
