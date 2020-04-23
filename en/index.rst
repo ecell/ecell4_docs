@@ -98,9 +98,6 @@ Links
 *********
 
 * https://e-cell.org
-* https://github.com/ecell/ecell4
-* https://github.com/ecell/ecell4_base
-* https://github.com/ecell/ecell4_docs
-* https://github.com/ecell/scopyon
+* https://github.com/ecell/
 * https://spatiocyte.org/
 * https://gfrd.org/
