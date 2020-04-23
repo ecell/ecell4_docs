@@ -7,6 +7,7 @@ E-Cell System version 4
 The E-Cell System is a software platform for modeling, simulation and analysis of complex, heterogeneous and multi-scale systems like the cell.
 Its latest version, E-Cell4, accepts multi-algorithms, multi-timescales and multi-spatial-representations as its central feature.
 E-Cell4 is a free and open-source software licensed under the GNU General Public License version 3. The source code is available on GitHub (`ecell4 <https://github.com/ecell/ecell4>`__ and `ecell4_base <https://github.com/ecell/ecell4_base>`__).
+This document is generated from `ecell4_docs <https://github.com/ecell/ecell4_docs>`__.
 
 *************
 Installation
@@ -74,7 +75,7 @@ If this package contributes to a project which leads to a scientific publication
 Licensing terms
 ****************
 
-This product is licensed under the terms of the `GNU General Public License v3 <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__. 
+This product is licensed under the terms of the `GNU General Public License v3 <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__.
 See also `LICENSE <https://github.com/ecell/ecell4_base/blob/master/LICENSE>`__ for the software included in this product.
 
 - Copyright (c) 2010-, RIKEN

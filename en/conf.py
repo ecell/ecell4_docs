@@ -68,7 +68,7 @@ html_sidebars = {
         'logo.html',
         'localtoc.html',
         # 'globaltoc.html',
-        'relations.html',
+        # 'relations.html',
         # 'sourcelink.html',
         'searchbox.html',
         ]
