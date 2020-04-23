@@ -13,7 +13,7 @@ Installation
 *************
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    installation
 
@@ -31,7 +31,7 @@ Tutorials
 **********
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    top
    tutorials/index
@@ -41,7 +41,7 @@ Models
 *******
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    examples/index
    tests/index
@@ -51,7 +51,7 @@ For Developers
 ***************
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    developers
 
@@ -80,7 +80,7 @@ API
 ****
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    api/ecell4
    api/ecell4_base
