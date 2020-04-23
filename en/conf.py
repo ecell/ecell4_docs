@@ -58,7 +58,7 @@ html_theme_options = {
     'logo_name': 'ecell4',
     'collapse_navigation' : False,
     'navigation_with_keys': True,
-    'description': 'The E-Cell System version 4',
+    'description': 'A software platform for modeling, simulation and analysis of a cell',
     'github_user': 'ecell',
     'github_repo': 'ecell4_doc'
     }
@@ -68,7 +68,7 @@ html_sidebars = {
         'logo.html',
         'localtoc.html',
         # 'globaltoc.html',
-        'relations.html',
+        # 'relations.html',
         # 'sourcelink.html',
         'searchbox.html',
         ]
