@@ -1,0 +1,31 @@
+dist: xenial
+language: python
+python:
+  - "3.7"
+install:
+  - sudo apt-get update
+  - sudo apt-get install ffmpeg -y
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+  - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda config --add channels conda-forge
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - conda env create -n test-environment python=$TRAVIS_PYTHON_VERSION -f environment.yml
+  - source activate test-environment
+
+script:
+  - py.test
+  - find ./temp -name "*.ipynb"
+  - jupyter nbconvert --to html ./temp/nb/en/tutorials/*.ipynb
+
+deploy:
+  provider: surge
+  project: ./temp/nb/en/tutorials/
+  domain: ecell4.surge.sh
+  skip_cleanup: true
