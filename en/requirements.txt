@@ -1,4 +1,7 @@
+numpy
 matplotlib
+plotly
 pint
+pyyaml
 ecell4_base
--e git+https://github.com/kaizu/ecell4.git@v1.2.0#egg=ecell4
+-e git+https://github.com/kaizu/ecell4.git@fix#egg=ecell4
