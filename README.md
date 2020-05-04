@@ -1,9 +1,16 @@
-# ecell4-docs
+# ecell4_docs
+
+[![Documentation Status](https://readthedocs.org/projects/ecell4/badge/?version=latest)](https://ecell4.readthedocs.io/en/latest/?badge=latest)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ecell/ecell4_docs/master)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ecell/ecell4_docs/)
+
+See [https://ecell4.readthedocs.io/en/latest/](https://ecell4.readthedocs.io/en/latest/).
+
+<!--
 
 ![banner](./ecell-logo-with-title.png)
 
 [![Build Status](https://travis-ci.org/ecell/ecell4_docs.svg?branch=master)](https://travis-ci.org/ecell/ecell4_docs)
-[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/ecell/ecell4-notebooks/master)
 
 ## Tutorials
 
@@ -34,4 +41,7 @@ MinDE System with Mesoscopic Simulator|[![nbviewer](https://img.shields.io/badge
 MinDE System with Spatiocyte Simulator|[![nbviewer](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/ecell/ecell4-docs/blob/master/en/examples/example9.ipynb)|[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ecell/ecell4-docs/blob/master/en/examples/example9.ipynb)
 Simple Equilibrium|[![nbviewer](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/ecell/ecell4-docs/blob/master/en/examples/example10.ipynb)|[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ecell/ecell4-docs/blob/master/en/examples/example10.ipynb)
 Tyson1991|[![nbviewer](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/ecell/ecell4-docs/blob/master/en/examples/example11.ipynb)|[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ecell/ecell4-docs/blob/master/en/examples/example11.ipynb)
+
 How to use the unit system|[![nbviewer](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/ecell/ecell4-docs/blob/master/en/examples/example12.ipynb)|[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ecell/ecell4-docs/blob/master/en/examples/example12.ipynb)
+
+-->

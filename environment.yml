@@ -1,9 +1,0 @@
-name: ecell4-docs
-channels:
-- ecell
-dependencies:
-- python
-- ecell4_base
-- ecell4
-- jupyter
-- pytest

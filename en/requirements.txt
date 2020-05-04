@@ -1,8 +1,7 @@
-breathe
+numpy
 matplotlib
-nbsphinx
-recommonmark
-numpydoc
-ipython
-pip>=8.1.2
-ecell4
+plotly
+pint
+pyyaml
+ecell4_base
+-e git+https://github.com/kaizu/ecell4.git@fix#egg=ecell4
