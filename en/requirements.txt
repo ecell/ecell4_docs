@@ -3,5 +3,5 @@ matplotlib
 plotly
 pint
 pyyaml
-ecell4_base
--e git+https://github.com/kaizu/ecell4.git@fix#egg=ecell4
+ecell4-base==2.1.0b1
+-e git+https://github.com/ecell/ecell4.git
