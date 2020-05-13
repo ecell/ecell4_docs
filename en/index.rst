@@ -99,7 +99,7 @@ API
 Links
 *********
 
-* https://e-cell.org
+* https://www.e-cell.org
 * https://github.com/ecell/
 * https://spatiocyte.org/
 * https://gfrd.org/
