@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7. Introduction of Rule-based Modeling &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="../_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="../genindex.html"/>
+      <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="../index.html"/>
+      <link rel="up" title="&lt;no title&gt;" href="index.html"/>
+      <link rel="next" title="8. More about 1. Brief Tour of E-Cell4 Simulations" href="tutorial08.html"/>
+      <link rel="prev" title="6. How to Solve ODEs with Rate Law Functions" href="tutorial06.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="7. Introduction of Rule-based Modeling">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="tutorials/tutorial07">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="../index.html">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="../index.html">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+<ul>
+<li><a class="reference internal" href="#">7. Introduction of Rule-based Modeling</a><ul>
+<li><a class="reference internal" href="#7.1.-count_species_matches">7.1. count_species_matches</a></li>
+<li><a class="reference internal" href="#7.2.-ReactionRule.count-and-generate">7.2. ReactionRule.count and generate</a></li>
+<li><a class="reference internal" href="#7.3.-NetfreeModel">7.3. NetfreeModel</a></li>
+<li><a class="reference internal" href="#7.4.-Differences-between-Species,-ReactionRule-and-NetfreeModel">7.4. Differences between Species, ReactionRule and NetfreeModel</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div id="searchbox">
+  <form class="search" action="../search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>This page was generated from <a class="reference external" href="https://github.com/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial07.ipynb">tutorials/tutorial07.ipynb</a>.</p>
+<p>Download the <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> for this section: <a class="reference download internal" download="" href="../_downloads/9c494bfc75f81570d487a519a3fb1872/tutorial07.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">tutorial07.ipynb</span></code></a>. <a class="reference external" href="https://nbviewer.jupyter.org/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial07.ipynb">View in nbviewer</a>.</p>
+<a class="reference external image-reference" href="https://colab.research.google.com/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial07.ipynb"><img alt="https://colab.research.google.com/assets/colab-badge.svg" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/kaizu/ecell4_docs/latest?filepath=en/tutorials/tutorial07.ipynb"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" /></a>
+</div>
+<div class="section" id="7.-Introduction-of-Rule-based-Modeling">
+<h1>7. Introduction of Rule-based Modeling<a class="headerlink" href="#7.-Introduction-of-Rule-based-Modeling" title="Permalink to this headline">¶</a></h1>
+<p>E-Cell4 provides the rule-based modeling environment.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="7.1.-count_species_matches">
+<h2>7.1. count_species_matches<a class="headerlink" href="#7.1.-count_species_matches" title="Permalink to this headline">¶</a></h2>
+<p>First, <code class="docutils literal notranslate"><span class="pre">count_species_matches</span></code> counts the number of matches between <code class="docutils literal notranslate"><span class="pre">Species</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).B(b^1)&quot;</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).A(b^1)&quot;</span><span class="p">)</span>
+<span class="n">pttrn1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">))</span>  <span class="c1"># =&gt; 2</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+2
+</pre></div></div>
+</div>
+<p>In the above case, <code class="docutils literal notranslate"><span class="pre">Species.count</span></code> just returns the number of <code class="docutils literal notranslate"><span class="pre">UnitSpecies</span></code> named <code class="docutils literal notranslate"><span class="pre">A</span></code> in <code class="docutils literal notranslate"><span class="pre">Species</span></code> regardless of its sites. To specify the occupancy of a bond:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pttrn1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)</span>
+<span class="n">pttrn2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^_)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn2</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0
+1
+</pre></div></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">A(b)</span></code> suggests that bond <code class="docutils literal notranslate"><span class="pre">b</span></code> is empty, and <code class="docutils literal notranslate"><span class="pre">A(b^_)</span></code> does that bond <code class="docutils literal notranslate"><span class="pre">b</span></code> is occupied. Underscore <code class="docutils literal notranslate"><span class="pre">_</span></code> means wildcard here. Similarly, you can also specify the state of sites.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=u)&quot;</span><span class="p">)</span>
+<span class="n">pttrn1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)</span>
+<span class="n">pttrn2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=u)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn2</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+1
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">A(b)</span></code> says nothing about the state, but <code class="docutils literal notranslate"><span class="pre">A(b=u)</span></code> specifies both state and bond. <code class="docutils literal notranslate"><span class="pre">A(b=u)</span></code> means that <code class="docutils literal notranslate"><span class="pre">UnitSpecies</span></code> named <code class="docutils literal notranslate"><span class="pre">A</span></code> has a site named <code class="docutils literal notranslate"><span class="pre">b</span></code> which state is <code class="docutils literal notranslate"><span class="pre">u</span></code> and the bond is empty. Wildcard <code class="docutils literal notranslate"><span class="pre">_</span></code> is acceptable even in a state and name.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=u^1).B(b=p^1)&quot;</span><span class="p">)</span>
+<span class="n">pttrn1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=_^_)&quot;</span><span class="p">)</span>  <span class="c1"># This is equivalent to `A(b^_)` here</span>
+<span class="n">pttrn2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(b^_)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn2</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 2</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+2
+</pre></div></div>
+</div>
+<p>Wildcard <code class="docutils literal notranslate"><span class="pre">_</span></code> matches anything, and the pattern matched is not consistent between wildcards even in the <code class="docutils literal notranslate"><span class="pre">Species</span></code>. On the other hand, named wildcards, <code class="docutils literal notranslate"><span class="pre">_1</span></code>, <code class="docutils literal notranslate"><span class="pre">_2</span></code> and so on, confer the consistency within the match.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).B(b^1)&quot;</span><span class="p">)</span>
+<span class="n">pttrn1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_._&quot;</span><span class="p">)</span>
+<span class="n">pttrn2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1._1&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn2</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 0</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+0
+</pre></div></div>
+</div>
+<p>where the first pattern matches in two ways (<code class="docutils literal notranslate"><span class="pre">A.B</span></code> and <code class="docutils literal notranslate"><span class="pre">B.A</span></code>), but the second matches nothing.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).A(b^1)&quot;</span><span class="p">)</span>
+<span class="n">pttrn1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1._1&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">pttrn1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="7.2.-ReactionRule.count-and-generate">
+<h2>7.2. ReactionRule.count and generate<a class="headerlink" href="#7.2.-ReactionRule.count-and-generate" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code> also has a function to count matches agaist the given list of reactants.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_unimolecular_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(p=u)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(p=p)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1,p=u).B(b^1)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rr1</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">sp1</span><span class="p">]))</span>  <span class="c1"># =&gt; 1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ReactionRule.generate</span></code> returns a list of <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>s generated based on the matches.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp1</span><span class="p">])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;A(b^1,p=u).B(b^1)&gt;A(b^1,p=p).B(b^1)|1&#39;]
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ReactionRule.generate</span></code> matters the order of <code class="docutils literal notranslate"><span class="pre">Species</span></code> in the given list:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).B(b^1)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp2</span><span class="p">,</span> <span class="n">sp1</span><span class="p">])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;A(b)+B(b)&gt;A(b^1).B(b^1)|1&#39;]
+[]
+</pre></div></div>
+</div>
+<p>On the current implementation, <code class="docutils literal notranslate"><span class="pre">ReactionRule.generate</span></code> does <strong>not</strong> always return a list of unique <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>s.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b,c^1).A(b,c^1)&quot;</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b,c^1).B(b,c^1)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rr1</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">]))</span>  <span class="c1"># =&gt; 4</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+4
+[&#39;A(b,c^1).A(b,c^1)+B(b,c^1).B(b,c^1)&gt;A(b^1,c^2).A(b,c^2).B(b^1,c^3).B(b,c^3)|1&#39;, &#39;A(b,c^1).A(b,c^1)+B(b,c^1).B(b,c^1)&gt;A(b^1,c^2).A(b,c^2).B(b,c^3).B(b^1,c^3)|1&#39;, &#39;A(b,c^1).A(b,c^1)+B(b,c^1).B(b,c^1)&gt;A(b,c^1).A(b^2,c^1).B(b^2,c^3).B(b,c^3)|1&#39;, &#39;A(b,c^1).A(b,c^1)+B(b,c^1).B(b,c^1)&gt;A(b,c^1).A(b^2,c^1).B(b,c^3).B(b^2,c^3)|1&#39;]
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ReactionRules</span></code> listed above look different, but all the products suggest the same.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">format_species</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">products</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">serial</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">])]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;A(b,c^1).A(b^2,c^1).B(b^2,c^3).B(b,c^3)&#39;}
+</pre></div></div>
+</div>
+<p>This is because these <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>s are generated based on the diffent matches though they produces the same <code class="docutils literal notranslate"><span class="pre">Species</span></code>. For details, See the section below.</p>
+<p>Wildcard is also available in <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_unimolecular_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(p=u^_)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(p=p^_)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(p=u^1).B(p^1)&quot;</span><span class="p">)])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;A(p=u^1).B(p^1)&gt;A(p=p^1).B(p^1)|1&#39;]
+</pre></div></div>
+</div>
+<p>Of course, a wildcard can work as a name of <code class="docutils literal notranslate"><span class="pre">UnitSpecies</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_unimolecular_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(p=u)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(p=p)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(p=u)&quot;</span><span class="p">)])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b^1,p=u).C(b^1,p=u)&quot;</span><span class="p">)])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;A(p=u)&gt;A(p=p)|1&#39;]
+[&#39;B(b^1,p=u).C(b^1,p=u)&gt;B(b^1,p=p).C(b^1,p=u)|1&#39;, &#39;B(b^1,p=u).C(b^1,p=u)&gt;B(b^1,p=u).C(b^1,p=p)|1&#39;]
+</pre></div></div>
+</div>
+<p>Named wildcards in a state is useful to specify the correspondence between sites.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_unbinding_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;AB(a=_1, b=_2)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b=_2)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(a=_1)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;AB(a=x, b=y)&quot;</span><span class="p">)])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;AB(a=y, b=x)&quot;</span><span class="p">)])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;AB(a=x, b=y)&gt;B(b=y)+A(a=x)|1&#39;]
+[&#39;AB(a=y, b=x)&gt;B(b=x)+A(a=y)|1&#39;]
+</pre></div></div>
+</div>
+<p>Nameless wildcard <code class="docutils literal notranslate"><span class="pre">_</span></code> does not care about equality between matches. Products are generated in order.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(b^1)._(b^1)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rr1</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">)])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+_(b)+_(b)&gt;_(b^1)._(b^1)|1
+[&#39;A(b)+A(b)&gt;A(b^1).A(b^1)|1&#39;]
+[&#39;A(b)+B(b)&gt;A(b^1).B(b^1)|1&#39;]
+</pre></div></div>
+</div>
+<p>For its symmetry, the former case above is sometimes preffered to have a half of the original kinetic rate. This is because the number of combinations of molecules in the former is <span class="math notranslate nohighlight">\(n(n-1)/2\)</span> even though that in the later is <span class="math notranslate nohighlight">\(n^2\)</span>, where both numbers of A and B molecules are <span class="math notranslate nohighlight">\(n\)</span>. This is true for <code class="docutils literal notranslate"><span class="pre">gillespie</span></code> and <code class="docutils literal notranslate"><span class="pre">ode</span></code>. However, in <code class="docutils literal notranslate"><span class="pre">egfrd</span></code> and <code class="docutils literal notranslate"><span class="pre">spatiocyte</span></code>, a kinetic rate is intrinsic one, and not affected by the number of combinations. Thus, in E-Cell4, no modification
+in the rate is done even for the case. See <a class="reference external" href="../../Tests/Homodimerization_and_Annihilation.ipynb">Homodimerization and Annihilation</a> for the difference between algorithms.</p>
+<p>In constrast to nameless wildcard, named wildcard keeps its consistency, and always suggests the same value in the <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1(b^1)._1(b^1)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rr1</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">)])])</span>  <span class="c1"># =&gt; []</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+_1(b)+_1(b)&gt;_1(b^1)._1(b^1)|1
+[&#39;A(b)+A(b)&gt;A(b^1).A(b^1)|1&#39;]
+[]
+</pre></div></div>
+</div>
+<p>Named wildcard is consistent even between <code class="docutils literal notranslate"><span class="pre">UnitSpecies</span></code>’ and <code class="docutils literal notranslate"><span class="pre">site</span></code>’s names, technically.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=_1)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=_1^1)._1(b^1)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rr1</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=B)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)])])</span>  <span class="c1"># =&gt; []</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b=B)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">)])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+A(b=_1)+_1(b)&gt;A(b=_1^1)._1(b^1)|1
+[]
+[&#39;A(b=B)+B(b)&gt;A(b=B^1).B(b^1)|1&#39;]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="7.3.-NetfreeModel">
+<h2>7.3. NetfreeModel<a class="headerlink" href="#7.3.-NetfreeModel" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">NetfreeModel</span></code> is a <code class="docutils literal notranslate"><span class="pre">Model</span></code> class for the rule-based modeling. The interface of <code class="docutils literal notranslate"><span class="pre">NetfreeModel</span></code> is almost same with <code class="docutils literal notranslate"><span class="pre">NetworkModel</span></code>, but takes into account rules and matches.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rr1</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(r^1).A(l^1)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">m1</span> <span class="o">=</span> <span class="n">NetfreeModel</span><span class="p">()</span>
+<span class="n">m1</span><span class="o">.</span><span class="n">add_reaction_rule</span><span class="p">(</span><span class="n">rr1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">num_reaction_rules</span><span class="p">())</span>
+
+<span class="n">m2</span> <span class="o">=</span> <span class="n">NetworkModel</span><span class="p">()</span>
+<span class="n">m2</span><span class="o">.</span><span class="n">add_reaction_rule</span><span class="p">(</span><span class="n">rr1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">num_reaction_rules</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+1
+</pre></div></div>
+</div>
+<p>Python notation explained in <a class="reference external" href="tutorial2.ipynb">2. How to Build a Model</a> is available too. To get a model as <code class="docutils literal notranslate"><span class="pre">NetfreeModel</span></code>, set <code class="docutils literal notranslate"><span class="pre">is_netfree</span></code> <code class="docutils literal notranslate"><span class="pre">True</span></code> in <code class="docutils literal notranslate"><span class="pre">get_model</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">A</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="n">r</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">l</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="mf">1.0</span>
+
+<span class="n">m1</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">is_netfree</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">m1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ecell4_base.core.NetfreeModel object at 0x145bb6e32998&gt;
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Model.query_reaction_rules</span></code> returns a list of <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>s agaist the given reactants. <code class="docutils literal notranslate"><span class="pre">NetworkModel</span></code> just returns <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>s based on the equality of <code class="docutils literal notranslate"><span class="pre">Species</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l)&quot;</span><span class="p">))))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r)&quot;</span><span class="p">))))</span>  <span class="c1"># =&gt; 0</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+0
+</pre></div></div>
+</div>
+<p>On the other hand, <code class="docutils literal notranslate"><span class="pre">NetfreeModel</span></code> genarates the list by applying the stored <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>s in the rule-based way.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l)&quot;</span><span class="p">))))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r)&quot;</span><span class="p">))))</span>  <span class="c1"># =&gt; 1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+1
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NetfreeModel</span></code> does not cache generated objects. Thus, <code class="docutils literal notranslate"><span class="pre">NetfreeModel.query_reaction_rules</span></code> is slow, but needs less memory.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r)&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r^1).A(l^1,r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r)&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r^1).A(l^1,r)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l,r^1).A(l^1,r)&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+A(l,r)+A(l,r)&gt;A(l,r^1).A(l^1,r)|2
+A(l,r^1).A(l^1,r)+A(l,r)&gt;A(l,r^1).A(l^1,r^2).A(l^2,r)|1
+A(l,r^1).A(l^1,r)+A(l,r^1).A(l^1,r)&gt;A(l,r^1).A(l^1,r^2).A(l^2,r^3).A(l^3,r)|2
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NetfreeModel.expand</span></code> expands <code class="docutils literal notranslate"><span class="pre">NetfreeModel</span></code> to <code class="docutils literal notranslate"><span class="pre">NetworkModel</span></code> by iteratively applying <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code>s agaist the given set of <code class="docutils literal notranslate"><span class="pre">Species</span></code> (called seed).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">_</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">_</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="n">_</span><span class="p">(</span><span class="n">b</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">_</span><span class="p">(</span><span class="n">b</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">m3</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m3</span><span class="o">.</span><span class="n">num_reaction_rules</span><span class="p">())</span>
+
+<span class="n">m4</span> <span class="o">=</span> <span class="n">m3</span><span class="o">.</span><span class="n">expand</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m4</span><span class="o">.</span><span class="n">num_reaction_rules</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">m4</span><span class="o">.</span><span class="n">reaction_rules</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+2
+6
+[&#39;A(b)+A(b)&gt;A(b^1).A(b^1)|1&#39;, &#39;A(b)+B(b)&gt;A(b^1).B(b^1)|1&#39;, &#39;B(b)+B(b)&gt;B(b^1).B(b^1)|1&#39;, &#39;A(b^1).A(b^1)&gt;A(b)+A(b)|1&#39;, &#39;A(b^1).B(b^1)&gt;A(b)+B(b)|1&#39;, &#39;B(b^1).B(b^1)&gt;B(b)+B(b)|1&#39;]
+</pre></div></div>
+</div>
+<p>To avoid the infinite iteration for expansion, you can limit the maximum number of iterations and of <code class="docutils literal notranslate"><span class="pre">UnitSpecies</span></code> in a <code class="docutils literal notranslate"><span class="pre">Species</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">m2</span> <span class="o">=</span> <span class="n">m1</span><span class="o">.</span><span class="n">expand</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(l, r)&quot;</span><span class="p">)],</span> <span class="mi">100</span><span class="p">,</span> <span class="p">{</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">):</span> <span class="mi">4</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">num_reaction_rules</span><span class="p">())</span>  <span class="c1"># =&gt; 4</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">m2</span><span class="o">.</span><span class="n">reaction_rules</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+4
+[&#39;A(l,r)+A(l,r)&gt;A(l,r^1).A(l^1,r)|2&#39;, &#39;A(l,r^1).A(l^1,r)+A(l,r^1).A(l^1,r)&gt;A(l,r^1).A(l^1,r^2).A(l^2,r^3).A(l^3,r)|2&#39;, &#39;A(l,r)+A(l,r^1).A(l^1,r)&gt;A(l,r^1).A(l^1,r^2).A(l^2,r)|2&#39;, &#39;A(l,r)+A(l,r^1).A(l^1,r^2).A(l^2,r)&gt;A(l,r^1).A(l^1,r^2).A(l^2,r^3).A(l^3,r)|2&#39;]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="7.4.-Differences-between-Species,-ReactionRule-and-NetfreeModel">
+<h2>7.4. Differences between Species, ReactionRule and NetfreeModel<a class="headerlink" href="#7.4.-Differences-between-Species,-ReactionRule-and-NetfreeModel" title="Permalink to this headline">¶</a></h2>
+<p>The functions explained above is similar, but there are some differences in the criteria.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).A(b^1)&quot;</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)</span>
+<span class="n">rr1</span> <span class="o">=</span> <span class="n">create_unbinding_reaction_rule</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">,</span> <span class="n">sp2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp1</span><span class="p">])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+[&#39;A(b^1).A(b^1)&gt;A(b)+A(b)|1&#39;]
+</pre></div></div>
+</div>
+<p>Though <code class="docutils literal notranslate"><span class="pre">count_species_matches</span></code> suggests two different ways for matching (left-right and right-left), <code class="docutils literal notranslate"><span class="pre">ReactionRule.generate</span></code> returns only one <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code> because the order doesn’t affect the product.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).B(b^1)&quot;</span><span class="p">)</span>
+<span class="n">rr1</span> <span class="o">=</span> <span class="n">create_unbinding_reaction_rule</span><span class="p">(</span>
+    <span class="n">sp1</span><span class="p">,</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">),</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1,c^2).A(b^3,c^2).B(b^1).B(b^3)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp2</span><span class="p">])])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+2
+[&#39;A(b^1,c^2).A(b^3,c^2).B(b^1).B(b^3)&gt;A(b,c^1).A(b^2,c^1).B(b^2)+B(b)|1&#39;, &#39;A(b^1,c^2).A(b^3,c^2).B(b^1).B(b^3)&gt;A(b^1,c^2).A(b,c^2).B(b^1)+B(b)|1&#39;]
+</pre></div></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">ReactionRule.generate</span></code> works similarly with <code class="docutils literal notranslate"><span class="pre">count_species_matches</span></code>. However, <code class="docutils literal notranslate"><span class="pre">NetfreeModel.query_reaction_rules</span></code> returns only one <code class="docutils literal notranslate"><span class="pre">ReationRule</span></code> with higher kinetic rate:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">m1</span> <span class="o">=</span> <span class="n">NetfreeModel</span><span class="p">()</span>
+<span class="n">m1</span><span class="o">.</span><span class="n">add_reaction_rule</span><span class="p">(</span><span class="n">rr1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">sp2</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;A(b^1,c^2).B(b^1).A(b^3,c^2).B(b^3)&gt;A(b,c^1).A(b^2,c^1).B(b^2)+B(b)|2&#39;]
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NetfreeModel.query_reaction_rules</span></code> checks if each <code class="docutils literal notranslate"><span class="pre">ReactionRule</span></code> generated is the same with others, and summalizes it if possible.</p>
+<p>As explaned above, <code class="docutils literal notranslate"><span class="pre">ReactionRule.generate</span></code> matters the order of <code class="docutils literal notranslate"><span class="pre">Species</span></code>, but <code class="docutils literal notranslate"><span class="pre">Netfree.query_reaction_rules</span></code> does not.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">)</span>
+<span class="n">rr1</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">,</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b^1).B(b^1)&quot;</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">NetfreeModel</span><span class="p">()</span>
+<span class="n">m1</span><span class="o">.</span><span class="n">add_reaction_rule</span><span class="p">(</span><span class="n">rr1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp2</span><span class="p">,</span> <span class="n">sp1</span><span class="p">])])</span>  <span class="c1"># =&gt; []</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">m1</span><span class="o">.</span><span class="n">query_reaction_rules</span><span class="p">(</span><span class="n">sp2</span><span class="p">,</span> <span class="n">sp1</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;A(b)+B(b)&gt;A(b^1).B(b^1)|1&#39;]
+[&#39;A(b)+B(b)&gt;A(b^1).B(b^1)|1&#39;]
+[]
+[&#39;A(b)+B(b)&gt;A(b^1).B(b^1)|1&#39;]
+</pre></div></div>
+</div>
+<p>Named wildcards must be consistent in the context while nameless wildcards are not necessarily consistent.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(b)&quot;</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1(b)&quot;</span><span class="p">)</span>
+<span class="n">sp3</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A(b)&quot;</span><span class="p">)</span>
+<span class="n">sp4</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B(b)&quot;</span><span class="p">)</span>
+<span class="n">rr1</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp1</span><span class="p">,</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_(b^1)._(b^1)&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">rr2</span> <span class="o">=</span> <span class="n">create_binding_reaction_rule</span><span class="p">(</span><span class="n">sp2</span><span class="p">,</span> <span class="n">sp2</span><span class="p">,</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;_1(b^1)._1(b^1)&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp2</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">sp3</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">sp2</span><span class="p">,</span> <span class="n">sp2</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count_species_matches</span><span class="p">(</span><span class="n">sp2</span><span class="p">,</span> <span class="n">sp3</span><span class="p">))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp3</span><span class="p">,</span> <span class="n">sp3</span><span class="p">])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr1</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp3</span><span class="p">,</span> <span class="n">sp4</span><span class="p">])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr2</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp3</span><span class="p">,</span> <span class="n">sp3</span><span class="p">])])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rr</span><span class="o">.</span><span class="n">as_string</span><span class="p">()</span> <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">rr2</span><span class="o">.</span><span class="n">generate</span><span class="p">([</span><span class="n">sp3</span><span class="p">,</span> <span class="n">sp4</span><span class="p">])])</span>  <span class="c1"># =&gt; []</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+1
+1
+1
+[&#39;A(b)+A(b)&gt;A(b^1).A(b^1)|1&#39;]
+[&#39;A(b)+B(b)&gt;A(b^1).B(b^1)|1&#39;]
+[&#39;A(b)+A(b)&gt;A(b^1).A(b^1)|1&#39;]
+[]
+</pre></div></div>
+</div>
+</div>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span>
+      ← <a href="tutorial06.html" title="6. How to Solve ODEs with Rate Law Functions">6. How to Solve ODEs with...</a>
+    </span>
+    <span style="float:right">
+      <a href="tutorial08.html" title="8. More about 1. Brief Tour of E-Cell4 Simulations">8. More about 1. Brief...</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>

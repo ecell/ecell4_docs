@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10. Spatiocyte Simulations at Single-Molecule Resolution &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="../_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="../genindex.html"/>
+      <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="../index.html"/>
+      <link rel="up" title="&lt;no title&gt;" href="index.html"/>
+      <link rel="next" title="&lt;no title&gt;" href="../examples/index.html"/>
+      <link rel="prev" title="9. Spatial Gillespie Method" href="tutorial09.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="10. Spatiocyte Simulations at Single-Molecule Resolution">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="tutorials/tutorial10">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="../index.html">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="../index.html">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+<ul>
+<li><a class="reference internal" href="#">10. Spatiocyte Simulations at Single-Molecule Resolution</a><ul>
+<li><a class="reference internal" href="#10.1.-Spatiocyte-Lattice-based-Method">10.1. Spatiocyte Lattice-based Method</a></li>
+<li><a class="reference internal" href="#10.2.-The-Diffusion-Movement-of-Single-Molecule">10.2. The Diffusion Movement of Single Molecule</a></li>
+<li><a class="reference internal" href="#10.3-The-Diffusion-Coefficient-and-the-Second-order-Reaction">10.3 The Diffusion Coefficient and the Second-order Reaction</a></li>
+<li><a class="reference internal" href="#10.4.-The-Structure-in-the-Spatiocyte-Method">10.4. The Structure in the Spatiocyte Method</a></li>
+<li><a class="reference internal" href="#10.5-The-structure-and-the-reaction">10.5 The structure and the reaction</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div id="searchbox">
+  <form class="search" action="../search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>This page was generated from <a class="reference external" href="https://github.com/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial10.ipynb">tutorials/tutorial10.ipynb</a>.</p>
+<p>Download the <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> for this section: <a class="reference download internal" download="" href="../_downloads/9a299094b084f9d66e03f8afa8ad22a7/tutorial10.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">tutorial10.ipynb</span></code></a>. <a class="reference external" href="https://nbviewer.jupyter.org/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial10.ipynb">View in nbviewer</a>.</p>
+<a class="reference external image-reference" href="https://colab.research.google.com/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial10.ipynb"><img alt="https://colab.research.google.com/assets/colab-badge.svg" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/kaizu/ecell4_docs/latest?filepath=en/tutorials/tutorial10.ipynb"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" /></a>
+</div>
+<div class="section" id="10.-Spatiocyte-Simulations-at-Single-Molecule-Resolution">
+<h1>10. Spatiocyte Simulations at Single-Molecule Resolution<a class="headerlink" href="#10.-Spatiocyte-Simulations-at-Single-Molecule-Resolution" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">We showed an example of E-Cell4 spatial representation.</div>
+<div class="line">Next let’s simulate the models with more detailed spatial representation called “single molecule resolution”.</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="10.1.-Spatiocyte-Lattice-based-Method">
+<h2>10.1. Spatiocyte Lattice-based Method<a class="headerlink" href="#10.1.-Spatiocyte-Lattice-based-Method" title="Permalink to this headline">¶</a></h2>
+<p>In spatical Gillespie method, we divided the <code class="docutils literal notranslate"><span class="pre">Space</span></code> into smaller <code class="docutils literal notranslate"><span class="pre">Space</span></code>, then we diffuse the molecules in the subvolumes. However, we treated the molecules in each subvolume just as the number of the molecules, and the location of the molecules are NOT determinated.</p>
+<p>In other words, the spatical resolution of spatical Gillespie method is equal to the side of a subvolume <span class="math notranslate nohighlight">\(l\)</span>. To improve this resolution, we need to make the size of <span class="math notranslate nohighlight">\(l\)</span> small. But in this method the <span class="math notranslate nohighlight">\(l\)</span> must be larger than the (at least) 10 times the diameter of molecule <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<p>How can we improve the spatical resolution to the size of the molecule? The answer is the simulation with single-molecule resolution. This method simulate the molecule not with the number of the molecules, but with the spatical reaction diffusion of each molecule.</p>
+<p>E-Cell4 has multiple single-molecule resolution method, here we explain about Spatiocyte lattice-based method. Spatiocyte treats each molecule as hard spheres, and diffuses the molecules on hexagonal close-packed lattice.</p>
+<p>Spatiocyte has an ID for each molecule and the position of the molecule with single-molecule resolution. For the higher spatial resolution, Spatiocyte has 100 times smaller time-step than spatical Gillespie, because the time scale of diffusion increases with the square of the distance.</p>
+<p>Next, let’s try the Spatiocyte method.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="n">B</span> <span class="o">|</span> <span class="n">C</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">==</span> <span class="n">C</span> <span class="o">|</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">(),</span> <span class="mf">0.005</span><span class="p">)</span>  <span class="c1"># The second argument is &#39;voxel_radius&#39;.</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">FixedIntervalNumberObserver</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>There is a distinct difference in the second argument for <code class="docutils literal notranslate"><span class="pre">spatiocyte.World</span></code>. This is called <code class="docutils literal notranslate"><span class="pre">voxel</span> <span class="pre">radius</span></code>. Spatiocyte defines the locations of the molecules with dividing the space with molecule size, and call the minimum unit for this space as <code class="docutils literal notranslate"><span class="pre">Voxel</span></code>.</p>
+<p>In most cases the size of the molecule would be good for <code class="docutils literal notranslate"><span class="pre">voxel</span> <span class="pre">radius</span></code>. In this example, we set 5 <span class="math notranslate nohighlight">\(\mathrm{nm}\)</span> as the radius of the molecule in the space with the side 1 <span class="math notranslate nohighlight">\(\mathrm{\mu m}\)</span> . It takes more time to simulate, but the result is same with ODE or Gillespie.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_5_0.png" src="../_images/tutorials_tutorial10_5_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="10.2.-The-Diffusion-Movement-of-Single-Molecule">
+<h2>10.2. The Diffusion Movement of Single Molecule<a class="headerlink" href="#10.2.-The-Diffusion-Movement-of-Single-Molecule" title="Permalink to this headline">¶</a></h2>
+<p>Next let’s simulate single molecule diffusion to check the resolution.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">(),</span> <span class="mf">0.005</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">pid</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">new_particle</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">ones</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">new_particle</span></code> method tries to place a particle to a coordinate in <code class="docutils literal notranslate"><span class="pre">spatiocyte.World</span></code>. It returns the particle’s <code class="docutils literal notranslate"><span class="pre">ParticleID</span></code> (<code class="docutils literal notranslate"><span class="pre">pid</span></code>). If <code class="docutils literal notranslate"><span class="pre">new_particle</span></code> fails to place the particle, it returns <code class="docutils literal notranslate"><span class="pre">None</span></code> instead of a <code class="docutils literal notranslate"><span class="pre">ParticleID</span></code>. If a particle is already placed in the coordinate, you can NOT place a particle over it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Particle</span></code> contains the particle position, species type, radius, and diffusion coefficient. You can inspect the <code class="docutils literal notranslate"><span class="pre">Particle</span></code> with the particle’s ID, <code class="docutils literal notranslate"><span class="pre">pid</span></code>.</p>
+<p>Let’s check <code class="docutils literal notranslate"><span class="pre">Particle</span></code> first.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pid</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">get_particle</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">species</span><span class="p">()</span><span class="o">.</span><span class="n">serial</span><span class="p">())</span>  <span class="c1"># must print: A</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">radius</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">D</span><span class="p">())</span>  <span class="c1"># must print: (0.005, 1.0)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">position</span><span class="p">()))</span>  <span class="c1"># must print: (0.49806291436591293, 0.49652123150307814, 0.5)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+A
+0.005 1.0
+(0.49806291436591293, 0.49652123150307814, 0.5)
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">get_particle</span></code> method receives a particle ID and returns the ID and particle (of cource the ID are same with the given one). You can inspect the coordinate of the particle as <code class="docutils literal notranslate"><span class="pre">Real3</span></code> with <code class="docutils literal notranslate"><span class="pre">position()</span></code> method. It is hard to directly read the coordinate, here we printed it after converting to tuple. As you can see the tuple coodinate is slightly different from the original position given as a <code class="docutils literal notranslate"><span class="pre">Real3</span></code>. This is because Spatiocyte can place the molecule only on the lattice.
+<code class="docutils literal notranslate"><span class="pre">SpatiocyteWorld</span></code> places the molecule a center position of the nearest lattice for the argument <code class="docutils literal notranslate"><span class="pre">Real3</span></code>.</p>
+<p>You can visualize the coordinate of the molecule with <code class="docutils literal notranslate"><span class="pre">plotting.plot_world</span></code> method, and check the molecule in the center of the World.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_world</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_11_0.png" src="../_images/tutorials_tutorial10_11_0.png" />
+</div>
+</div>
+<p>And you can use <code class="docutils literal notranslate"><span class="pre">FixedIntervalTrajectoryObserver</span></code> to track the trajectory of molecular diffusion process.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sim</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">FixedIntervalTrajectoryObserver</span><span class="p">(</span><span class="mf">0.002</span><span class="p">,</span> <span class="p">[</span><span class="n">pid</span><span class="p">])</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_trajectory</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_13_0.png" src="../_images/tutorials_tutorial10_13_0.png" />
+</div>
+</div>
+<p>Here we visualized the trajectory with <code class="docutils literal notranslate"><span class="pre">plotting.plot_trajectory</span></code> method, you can also obtain it as <code class="docutils literal notranslate"><span class="pre">Real3</span></code> list with <code class="docutils literal notranslate"><span class="pre">data()</span></code> method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">data</span><span class="p">()))</span>  <span class="c1"># =&gt; 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">data</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>  <span class="c1"># =&gt; 501</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+501
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">data()</span></code> method returns nested list. First index means the index of the particle. Second index means the index of the <code class="docutils literal notranslate"><span class="pre">Real3</span></code>. In this case we threw just one particle, so the first result is <code class="docutils literal notranslate"><span class="pre">1</span></code>, and next <code class="docutils literal notranslate"><span class="pre">501</span></code> means time-series coordinate of the only one particle (initial coordinate and the coordinates in 1/0.002 = 500 time points).</p>
+<p>Also you can obtain the particles in bulk with <code class="docutils literal notranslate"><span class="pre">list_particles_exact</span></code> method and a <code class="docutils literal notranslate"><span class="pre">Species</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">particles</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">list_particles_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">particles</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">species</span><span class="p">()</span><span class="o">.</span><span class="n">serial</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">position</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+A (0.8654863757833897, 0.2511473670974872, 0.115)
+A (0.13880441875771343, 0.8429313930168537, 0.31)
+A (0.6287023673143491, 0.2107328482542134, 0.775)
+A (0.24494897427831783, 0.008660254037844387, 0.265)
+A (0.7756717518813399, 0.31465589670834604, 0.655)
+A (0.5552176750308537, 0.4070319397786862, 0.145)
+</pre></div></div>
+</div>
+<p>Please remember <code class="docutils literal notranslate"><span class="pre">list_particles_exact</span></code> method, this method can be used for other World as well as <code class="docutils literal notranslate"><span class="pre">add_molecules</span></code> method.</p>
+</div>
+<div class="section" id="10.3-The-Diffusion-Coefficient-and-the-Second-order-Reaction">
+<h2>10.3 The Diffusion Coefficient and the Second-order Reaction<a class="headerlink" href="#10.3-The-Diffusion-Coefficient-and-the-Second-order-Reaction" title="Permalink to this headline">¶</a></h2>
+<p>The models we have addressed contains a second-order reaction. Let’s look at the relationship between this second-order reaction and the diffusion coefficient in Spatiocyte.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="n">B</span> <span class="o">|</span> <span class="n">C</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">&gt;</span> <span class="n">C</span> <span class="o">|</span> <span class="mf">1.0</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.005</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="mi">120</span><span class="p">)</span>
+
+<span class="n">obs</span> <span class="o">=</span> <span class="n">FixedIntervalNumberObserver</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">))</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">odew</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="c1"># odew.bind_to(m)</span>
+<span class="n">odew</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">odew</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="mi">120</span><span class="p">)</span>
+
+<span class="n">odeobs</span> <span class="o">=</span> <span class="n">FixedIntervalNumberObserver</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">))</span>
+<span class="n">odesim</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">odew</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+<span class="n">odesim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">odeobs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">odeobs</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_24_0.png" src="../_images/tutorials_tutorial10_24_0.png" />
+</div>
+</div>
+<p>Although we used faster kinetic constant than before, the result is same. But by contrast with ODE simulation, you can find the difference between them (solid line is <code class="docutils literal notranslate"><span class="pre">spatiocyte</span></code>, dash line is <code class="docutils literal notranslate"><span class="pre">ode</span></code>). Is this fault of Spatiocyte? (No) Actually Spatiocyte reaction rate couldn’t be faster, while ODE reaction rate can be faster infinitely.</p>
+<p>This is caused by the difference between the definition of reaction rate constant in ODE solver and single molecule simulation method. The former is called “macroscopic” or “effective” reaction rate constant, the latter is called “microscopic” or “intrinsic” reaction rate constant.</p>
+<p>The “macroscopic” rate represents the reaction rate in mixed molecular state, meanwhile “microscopic” rate represents the reactivity in molecule collision. So in “microscopic” perspective, the first thing molecules need to react is collision. In Spatiocyte, however, you make this “microscopic” rate faster, you can NOT make the actual reaction rate faster than collision rate. This is called “diffusion-limited” condition. This is similar to what the molecules coordinated disproportionately need
+time to react.</p>
+<p>It is known that there is a relationship between this macroscopic rate constant <span class="math notranslate nohighlight">\(k_\mathrm{on}\)</span> and microscopic rate constant <span class="math notranslate nohighlight">\(k_a\)</span> in 3D space.</p>
+<p><span class="math notranslate nohighlight">\(\frac{1}{k_\mathrm{on}}=\frac{1}{k_a}+\frac{1}{4\pi RD_\mathrm{tot}},\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(R\)</span> is the sum of two molecule’s radius in collision, <span class="math notranslate nohighlight">\(D_\mathrm{tot}\)</span> is the sum of diffusion coefficients.</p>
+<p>In the case of the above Jupyter Notebook cell, <span class="math notranslate nohighlight">\(k_D=4\pi RD_\mathrm{tot}\)</span> is almost 0.25 and “microscopic” rate constant is 1.0. So the “macroscopic” rate constant is almost 0.2. (However unless you specify the configuration for Spatiocyte, the second order reaction rate must be slower than <span class="math notranslate nohighlight">\(3\sqrt{2} RD\)</span>, and the dissociation constant <span class="math notranslate nohighlight">\(k_D\)</span> is also <span class="math notranslate nohighlight">\(3\sqrt{2} RD\)</span>.) The single molecule simulation method can separate molecular “diffusion” and “reaction” in accurate manner
+contrary to ODE or Gillespie method supposed well mixed system (that is diffusion coefficient is infinite). However if the microscopic rate constant <span class="math notranslate nohighlight">\(k_D\)</span> is small enough, the macroscopic rate constant is almost equal to microscopic one (reaction rate-limited).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="n">kD</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.005</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ka</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">kf</span> <span class="o">=</span> <span class="n">ka</span> <span class="o">*</span> <span class="n">kD</span> <span class="o">/</span> <span class="p">(</span><span class="n">ka</span> <span class="o">+</span> <span class="n">kD</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">&gt;</span> <span class="n">C</span> <span class="o">|</span> <span class="n">kf</span>
+
+<span class="n">odeobs</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">120</span><span class="p">},</span> <span class="n">volume</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;observer&#39;</span><span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">odeobs</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_28_0.png" src="../_images/tutorials_tutorial10_28_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="10.4.-The-Structure-in-the-Spatiocyte-Method">
+<h2>10.4. The Structure in the Spatiocyte Method<a class="headerlink" href="#10.4.-The-Structure-in-the-Spatiocyte-Method" title="Permalink to this headline">¶</a></h2>
+<p>Next we explain a way to create a structure like cell membrane. Although The structure feature in E-Cell4 is still in development, Spatiocyte supports the structure on some level. Let’s look a sphere structure as an example.</p>
+<p>To restrict the molecular diffusion inside of the sphere, first we create it.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;dimension&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+    <span class="n">C</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;dimension&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">SpatiocyteWorld</span><span class="p">(</span><span class="n">ones</span><span class="p">(),</span> <span class="mf">0.005</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">sph</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">ones</span><span class="p">(),</span> <span class="mf">0.45</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">add_structure</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="n">sph</span><span class="p">))</span>  <span class="c1"># will print 539805</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+539805
+</pre></div></div>
+</div>
+<p>Visualize the state of the <code class="docutils literal notranslate"><span class="pre">World</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_33_0.png" src="../_images/tutorials_tutorial10_33_0.png" />
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Sphere</span></code> class first argument is the center of the sphere, and second argument is the radius. Then we created a <code class="docutils literal notranslate"><span class="pre">Species</span></code> named <code class="docutils literal notranslate"><span class="pre">C</span></code> and added it inside the <code class="docutils literal notranslate"><span class="pre">Sphere</span></code>. The structure in the Spatiocyte method is described by filling the space with the <code class="docutils literal notranslate"><span class="pre">Voxel</span></code>. In the example above, the <code class="docutils literal notranslate"><span class="pre">Voxel</span></code>s in the sphere are occupied with <code class="docutils literal notranslate"><span class="pre">Species</span></code> named <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
+<p>You can see those distribution with <code class="docutils literal notranslate"><span class="pre">viz.plot_world</span></code> as above. (However, the number of the species is too large to visualize all. So we plot only a part of it, but actually the sphere is fully occupied with the <code class="docutils literal notranslate"><span class="pre">Species</span></code>.)</p>
+<p>Next we create Species moving inside this sphere. To that end we give <code class="docutils literal notranslate"><span class="pre">location</span></code> attribute to the <code class="docutils literal notranslate"><span class="pre">Species</span></code>. After that, you just throw-in molecules to the <code class="docutils literal notranslate"><span class="pre">World</span></code> with <code class="docutils literal notranslate"><span class="pre">add_molecules</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mi">120</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">species_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>  <span class="c1"># visualize A-molecules only</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_36_0.png" src="../_images/tutorials_tutorial10_36_0.png" />
+</div>
+</div>
+<p>Now we restricted the trajectories of <code class="docutils literal notranslate"><span class="pre">Species</span></code> <code class="docutils literal notranslate"><span class="pre">A</span></code> on the structure of Species <code class="docutils literal notranslate"><span class="pre">C</span></code>, and <code class="docutils literal notranslate"><span class="pre">add_molecules</span></code> works like that. As a note, you need to create the structure before <code class="docutils literal notranslate"><span class="pre">add_molecule</span></code>.</p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">FixedIntervalTrajectoryObserver</span></code> to check the restriction of the diffusion area.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pid_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">pid</span> <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">list_particles</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">))[:</span> <span class="mi">10</span><span class="p">]]</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">FixedIntervalTrajectoryObserver</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">pid_list</span><span class="p">)</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_38_0.png" src="../_images/tutorials_tutorial10_38_0.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pid_list</span></code> is a list of the first 10 <code class="docutils literal notranslate"><span class="pre">ParticleID</span></code>s of <code class="docutils literal notranslate"><span class="pre">A</span></code> molecules. The trajectories are colored by this 10 species. Certainly the trajectories are restricted in the sphere.</p>
+</div>
+<div class="section" id="10.5-The-structure-and-the-reaction">
+<h2>10.5 The structure and the reaction<a class="headerlink" href="#10.5-The-structure-and-the-reaction" title="Permalink to this headline">¶</a></h2>
+<p>At the end, we explain about molecular translocation among the structures.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Species</span></code> without <code class="docutils literal notranslate"><span class="pre">location</span></code> attribute is not an member of any structures. In the example above, if you do NOT write <code class="docutils literal notranslate"><span class="pre">location</span></code> attribute with Species <code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">A</span></code> is placed outside of the sphere.</p>
+<p>Next let’s create a planar surface structure. To create a surface, we need to use three Real3, those are original point (<code class="docutils literal notranslate"><span class="pre">origin</span></code>) and two axis vector (<code class="docutils literal notranslate"><span class="pre">unit0</span></code>, <code class="docutils literal notranslate"><span class="pre">unit1</span></code>): <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">=</span> <span class="pre">PlanarSurface(origin,</span> <span class="pre">unit0,</span> <span class="pre">unit1)</span></code>.</p>
+<p>Suppose Species <code class="docutils literal notranslate"><span class="pre">A</span></code> on the surface, <code class="docutils literal notranslate"><span class="pre">ps</span></code>, and a normal Species <code class="docutils literal notranslate"><span class="pre">B</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;dimension&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="n">B</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+    <span class="n">M</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;dimension&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="n">m</span>  <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">())</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">origin</span> <span class="o">=</span> <span class="n">Real3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_structure</span><span class="p">(</span>
+    <span class="n">Species</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">),</span> <span class="n">PlanarSurface</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">unitx</span><span class="p">(),</span> <span class="n">unity</span><span class="p">()))</span>  <span class="c1"># Create a structure first</span>
+
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="mi">480</span><span class="p">)</span>  <span class="c1"># Throw-in B-molecules</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">species_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_42_0.png" src="../_images/tutorials_tutorial10_42_0.png" />
+</div>
+</div>
+<p>It might be hard to see them, but actually the <code class="docutils literal notranslate"><span class="pre">Species</span></code> <code class="docutils literal notranslate"><span class="pre">B</span></code> are placed only not on a surface. Then how can we make absorbed this <code class="docutils literal notranslate"><span class="pre">Species</span></code> <code class="docutils literal notranslate"><span class="pre">B</span></code> to a surface <code class="docutils literal notranslate"><span class="pre">M</span></code> and synthesize a <code class="docutils literal notranslate"><span class="pre">Species</span></code> <code class="docutils literal notranslate"><span class="pre">A</span></code>?</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;dimension&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="n">B</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+    <span class="n">M</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;dimension&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">B</span> <span class="o">+</span> <span class="n">M</span> <span class="o">==</span> <span class="n">A</span> <span class="o">|</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>This means that a <code class="docutils literal notranslate"><span class="pre">Species</span></code> <code class="docutils literal notranslate"><span class="pre">B</span></code> becomes <code class="docutils literal notranslate"><span class="pre">A</span></code> when <code class="docutils literal notranslate"><span class="pre">B</span></code> collides with a structure <code class="docutils literal notranslate"><span class="pre">M</span></code>. On the other hand, a species <code class="docutils literal notranslate"><span class="pre">A</span></code> dissociates from the structure, and becomes <code class="docutils literal notranslate"><span class="pre">M</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> on as the reverse reaction direction.</p>
+<p>Now you can simulate this model with a structure.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">NumberObserver</span><span class="p">((</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">species_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_47_0.png" src="../_images/tutorials_tutorial10_47_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial10_47_1.png" src="../_images/tutorials_tutorial10_47_1.png" />
+</div>
+</div>
+<p>In the dissociation from a structure, you can skip to write the structure. Thus, <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&gt;</span> <span class="pre">B</span></code> just means the same as <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&gt;</span> <span class="pre">B</span> <span class="pre">+</span> <span class="pre">M</span></code> in the above. But in the binding, you can <strong>NOT</strong>. Because it is impossible to create <code class="docutils literal notranslate"><span class="pre">A</span></code> from <code class="docutils literal notranslate"><span class="pre">B</span></code> with no <code class="docutils literal notranslate"><span class="pre">M</span></code> around there. By contrast the species <code class="docutils literal notranslate"><span class="pre">A</span></code> wherever on the sphere <code class="docutils literal notranslate"><span class="pre">M</span></code> can create the species <code class="docutils literal notranslate"><span class="pre">B</span></code>. The first order reaction occurs in either presence or absence of the structure. But, in the case of the binding, the second order reaction turns into
+the first order reaction and the meaning of rate constant also changes if you ignore <code class="docutils literal notranslate"><span class="pre">M</span></code> in the left-hand side.</p>
+</div>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span>
+      ← <a href="tutorial09.html" title="9. Spatial Gillespie Method">9. Spatial Gillespie Method</a>
+    </span>
+    <span style="float:right">
+      <a href="../examples/index.html" title="&lt;no title&gt;">&lt;no title&gt;</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>

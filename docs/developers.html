@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Developers &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="genindex.html"/>
+      <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="index.html"/>
+      <link rel="next" title="ecell4 module" href="api/ecell4.html"/>
+      <link rel="prev" title="Mean Square Displacement (MSD)" href="tests/MSD.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="For Developers">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="developers">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="index.html">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="index.html">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+<ul>
+<li><a class="reference internal" href="#">For Developers</a><ul>
+<li><a class="reference internal" href="#repositories">Repositories</a></li>
+<li><a class="reference internal" href="#when-you-need-to-compile-ecell4-base-by-yourself">When you need to compile ecell4_base by yourself</a></li>
+<li><a class="reference internal" href="#releasing-ecell4">Releasing <code class="code docutils literal notranslate"><span class="pre">ecell4</span></code></a><ul>
+<li><a class="reference internal" href="#github">GitHub</a></li>
+<li><a class="reference internal" href="#pypi">PyPI</a></li>
+<li><a class="reference internal" href="#conda-forge">conda-forge</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-release-ecell4-not-ecell4-base">How to release <code class="code docutils literal notranslate"><span class="pre">ecell4</span></code> (not <code class="code docutils literal notranslate"><span class="pre">ecell4_base</span></code>)</a><ul>
+<li><a class="reference internal" href="#id1">GitHub</a></li>
+<li><a class="reference internal" href="#id2">PyPI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div id="searchbox">
+  <form class="search" action="search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  <div class="section" id="for-developers">
+<h1>For Developers<a class="headerlink" href="#for-developers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="repositories">
+<h2>Repositories<a class="headerlink" href="#repositories" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ecell/ecell4">https://github.com/ecell/ecell4</a></p></li>
+<li><p><a class="reference external" href="https://github.com/conda-forge/ecell4-feedstock">https://github.com/conda-forge/ecell4-feedstock</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/ecell4/">https://pypi.org/project/ecell4/</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ecell/ecell4_base">https://github.com/ecell/ecell4_base</a></p></li>
+<li><p><a class="reference external" href="https://github.com/conda-forge/ecell4_base-feedstock">https://github.com/conda-forge/ecell4_base-feedstock</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/ecell4-base/">https://pypi.org/project/ecell4-base/</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ecell/ecell4_docs">https://github.com/ecell/ecell4_docs</a></p></li>
+<li><p><a class="reference external" href="https://readthedocs.org/projects/ecell4-docs/">https://readthedocs.org/projects/ecell4-docs/</a></p></li>
+</ul>
+</div>
+<div class="section" id="when-you-need-to-compile-ecell4-base-by-yourself">
+<h2>When you need to compile ecell4_base by yourself<a class="headerlink" href="#when-you-need-to-compile-ecell4-base-by-yourself" title="Permalink to this headline">¶</a></h2>
+<p>Please refer to <a class="reference external" href="https://github.com/ecell/ecell4_base/blob/master/azure-pipelines.yml">https://github.com/ecell/ecell4_base/blob/master/azure-pipelines.yml</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="releasing-ecell4">
+<h2>Releasing <code class="code docutils literal notranslate"><span class="pre">ecell4</span></code><a class="headerlink" href="#releasing-ecell4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="github">
+<h3>GitHub<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Update ecell4_base version in <a class="reference external" href="https://github.com/ecell/ecell4_base/blob/master/setup.py">https://github.com/ecell/ecell4_base/blob/master/setup.py</a></p></li>
+<li><p>Git tag push v*.*.* to ecell4_base. GitHub Actions automatically create the new release. You do NOT need to create the release by yourself.</p></li>
+<li><p>Write release note based on the <strong>pull requests</strong>.</p></li>
+</ol>
+</div>
+<div class="section" id="pypi">
+<h3>PyPI<a class="headerlink" href="#pypi" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Update cmake and gsl versions in <a class="reference external" href="https://github.com/ecell/manylinux-dockerimage/blob/master/Dockerfile">https://github.com/ecell/manylinux-dockerimage/blob/master/Dockerfile</a> with the latest conda-forge</p></li>
+<li><p>Update boost version in <a class="reference external" href="https://github.com/ecell/ecell4_base/blob/master/.circleci/config.yml">https://github.com/ecell/ecell4_base/blob/master/.circleci/config.yml</a> with the latest conda-forge</p></li>
+<li><p>Check <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">THE_CIRCLECI_ARTIFACT_PYTHONWHEEL</span></code> in Google Colab</p></li>
+<li><p>twine upload the manylinux wheel</p></li>
+</ol>
+</div>
+<div class="section" id="conda-forge">
+<h3>conda-forge<a class="headerlink" href="#conda-forge" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Sync <a class="reference external" href="https://github.com/ecell/ecell4_base-feedstock">https://github.com/ecell/ecell4_base-feedstock</a> with upstream.</p></li>
+<li><p>Create new branch to <a class="reference external" href="https://github.com/ecell/ecell4_base-feedstock">https://github.com/ecell/ecell4_base-feedstock</a> and checkout it.</p></li>
+<li><p>Update meta.yaml
+- version
+- build:number: to 0.
+- sha256 checksum</p></li>
+<li><p><a class="reference external" href="https://conda-forge.org/docs/maintainer/updating_pkgs.html#rerendering-feedstocks">Rerender feedstocks</a>.</p></li>
+<li><p>Send pull request to <a class="reference external" href="https://github.com/conda-forge/ecell4_base-feedstock/blob/master/recipe/meta.yaml">https://github.com/conda-forge/ecell4_base-feedstock/blob/master/recipe/meta.yaml</a></p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="how-to-release-ecell4-not-ecell4-base">
+<h2>How to release <code class="code docutils literal notranslate"><span class="pre">ecell4</span></code> (not <code class="code docutils literal notranslate"><span class="pre">ecell4_base</span></code>)<a class="headerlink" href="#how-to-release-ecell4-not-ecell4-base" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>GitHub<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Update version in setup.py</p></li>
+<li><p>Create release with GitHub releases</p></li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h3>PyPI<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>pip install twine</p></li>
+<li><p>python setup.py sdist</p></li>
+<li><p>twine upload dist/*</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span>
+      ← <a href="tests/MSD.html" title="Mean Square Displacement (MSD)">Mean Square Displacement (MSD)</a>
+    </span>
+    <span style="float:right">
+      <a href="api/ecell4.html" title="ecell4 module">ecell4 module</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>

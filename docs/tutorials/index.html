@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>&lt;no title&gt; &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="../_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="../genindex.html"/>
+      <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="../index.html"/>
+      <link rel="next" title="1. Brief Tour of E-Cell4 Simulations" href="tutorial01.html"/>
+      <link rel="prev" title="Welcome to E-Cell4 in Jupyter Notebook!" href="../top.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="&lt;no title&gt;">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="tutorials/index">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="../index.html">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="../index.html">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+
+</div>
+<div id="searchbox">
+  <form class="search" action="../search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial01.html">1. Brief Tour of E-Cell4 Simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial01.html#1.1.-Quick-Demo">1.1. Quick Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial01.html#1.2.-Spatial-Simulation-and-Visualization">1.2. Spatial Simulation and Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial02.html">2. How to Build a Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial02.html#2.1.-Species">2.1. Species</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial02.html#2.2.-ReactionRule">2.2. ReactionRule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial02.html#2.3.-NetworkModel">2.3. NetworkModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial02.html#2.4.-Python-Utilities-to-Build-a-Model">2.4. Python Utilities to Build a Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial03.html">3. How to Setup the Initial Condition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial03.html#3.1.-Common-APIs-of-World">3.1. Common APIs of World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial03.html#3.2.-How-to-Get-Molecule-Positions">3.2. How to Get Molecule Positions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial03.html#3.3.-Lattice-based-Coordinate">3.3. Lattice-based Coordinate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial03.html#3.4-Structure">3.4 Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial03.html#3.5.-Random-Number-Generator">3.5. Random Number Generator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial04.html">4. How to Run a Simulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial04.html#4.1.-How-to-Setup-a-Simulator">4.1. How to Setup a Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial04.html#4.2.-Running-Simulations">4.2. Running Simulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial04.html#4.3.-Capsulizing-Algorithm-into-a-Factory-Class">4.3. Capsulizing Algorithm into a Factory Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial05.html">5. How to Log and Visualize Simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial05.html#5.1.-Logging-Simulations-with-Observers">5.1. Logging Simulations with Observers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial05.html#5.2.-Visualization-of-Data-Logged">5.2. Visualization of Data Logged</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial06.html">6. How to Solve ODEs with Rate Law Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial06.html#6.1.-ReactionRuleDescriptor">6.1. ReactionRuleDescriptor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial06.html#6.2.-ReactionRuleDescriptorPyFunc">6.2. ReactionRuleDescriptorPyFunc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial06.html#6.3.-NetworkModel">6.3. NetworkModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial06.html#6.4.-References-in-a-Rate-Law">6.4. References in a Rate Law</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial06.html#6.5.-More-about-ODEs">6.5. More about ODEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial07.html">7. Introduction of Rule-based Modeling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial07.html#7.1.-count_species_matches">7.1. count_species_matches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial07.html#7.2.-ReactionRule.count-and-generate">7.2. ReactionRule.count and generate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial07.html#7.3.-NetfreeModel">7.3. NetfreeModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial07.html#7.4.-Differences-between-Species,-ReactionRule-and-NetfreeModel">7.4. Differences between Species, ReactionRule and NetfreeModel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial08.html">8. More about 1. Brief Tour of E-Cell4 Simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial08.html#8.1.-Creating-ODEWorld">8.1. Creating ODEWorld</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial08.html#8.2.-How-to-Use-Real3">8.2. How to Use Real3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial08.html#8.3.-Creating-and-Running-ODE-Simulator">8.3. Creating and Running ODE Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial08.html#8.4.-Switching-the-Solver">8.4. Switching the Solver</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial09.html">9. Spatial Gillespie Method</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial09.html#9.1.-Spaces-in-E-Cell4">9.1. Spaces in E-Cell4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial09.html#9.2.-Spatial-Gillespie-Method">9.2. Spatial Gillespie Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial09.html#9.3.-Defining-Molecular-Diffusion-Coefficient">9.3. Defining Molecular Diffusion Coefficient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial09.html#9.4.-Molecular-localization">9.4. Molecular localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial09.html#9.5.-Molecular-initial-location-and-the-reaction">9.5. Molecular initial location and the reaction</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial10.html">10. Spatiocyte Simulations at Single-Molecule Resolution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial10.html#10.1.-Spatiocyte-Lattice-based-Method">10.1. Spatiocyte Lattice-based Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial10.html#10.2.-The-Diffusion-Movement-of-Single-Molecule">10.2. The Diffusion Movement of Single Molecule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial10.html#10.3-The-Diffusion-Coefficient-and-the-Second-order-Reaction">10.3 The Diffusion Coefficient and the Second-order Reaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial10.html#10.4.-The-Structure-in-the-Spatiocyte-Method">10.4. The Structure in the Spatiocyte Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial10.html#10.5-The-structure-and-the-reaction">10.5 The structure and the reaction</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span>
+      ← <a href="../top.html" title="Welcome to E-Cell4 in Jupyter Notebook!">Welcome to E-Cell4 in...</a>
+    </span>
+    <span style="float:right">
+      <a href="tutorial01.html" title="1. Brief Tour of E-Cell4 Simulations">1. Brief Tour of E-Cell4...</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>
