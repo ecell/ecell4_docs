@@ -3,5 +3,6 @@ matplotlib
 plotly
 pint
 pyyaml
-ecell4_base
+numpy-stl
+ecell4-base>=2.1.0b1
 ecell4>=1.2.0b1
