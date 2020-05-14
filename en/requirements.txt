@@ -4,5 +4,5 @@ plotly
 pint
 pyyaml
 numpy-stl
-ecell4-base==2.1.0b1
--e git+https://github.com/ecell/ecell4.git#egg=ecell4
+ecell4-base>=2.1.0b1
+ecell4>=1.2.0b1

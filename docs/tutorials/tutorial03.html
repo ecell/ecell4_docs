@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3. How to Setup the Initial Condition &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="../_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="../genindex.html"/>
+      <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="../index.html"/>
+      <link rel="up" title="&lt;no title&gt;" href="index.html"/>
+      <link rel="next" title="4. How to Run a Simulation" href="tutorial04.html"/>
+      <link rel="prev" title="2. How to Build a Model" href="tutorial02.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="3. How to Setup the Initial Condition">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="tutorials/tutorial03">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="../index.html">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="../index.html">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+<ul>
+<li><a class="reference internal" href="#">3. How to Setup the Initial Condition</a><ul>
+<li><a class="reference internal" href="#3.1.-Common-APIs-of-World">3.1. Common APIs of World</a></li>
+<li><a class="reference internal" href="#3.2.-How-to-Get-Molecule-Positions">3.2. How to Get Molecule Positions</a></li>
+<li><a class="reference internal" href="#3.3.-Lattice-based-Coordinate">3.3. Lattice-based Coordinate</a></li>
+<li><a class="reference internal" href="#3.4-Structure">3.4 Structure</a></li>
+<li><a class="reference internal" href="#3.5.-Random-Number-Generator">3.5. Random Number Generator</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div id="searchbox">
+  <form class="search" action="../search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>This page was generated from <a class="reference external" href="https://github.com/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial03.ipynb">tutorials/tutorial03.ipynb</a>.</p>
+<p>Download the <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> for this section: <a class="reference download internal" download="" href="../_downloads/50fa624193721faeb84d68b519c8451d/tutorial03.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">tutorial03.ipynb</span></code></a>. <a class="reference external" href="https://nbviewer.jupyter.org/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial03.ipynb">View in nbviewer</a>.</p>
+<a class="reference external image-reference" href="https://colab.research.google.com/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial03.ipynb"><img alt="https://colab.research.google.com/assets/colab-badge.svg" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/kaizu/ecell4_docs/latest?filepath=en/tutorials/tutorial03.ipynb"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" /></a>
+</div>
+<div class="section" id="3.-How-to-Setup-the-Initial-Condition">
+<h1>3. How to Setup the Initial Condition<a class="headerlink" href="#3.-How-to-Setup-the-Initial-Condition" title="Permalink to this headline">¶</a></h1>
+<p>Here, we explain the basics of <code class="docutils literal notranslate"><span class="pre">World</span></code> classes. In E-Cell4, six types of World classes are supported now: <code class="docutils literal notranslate"><span class="pre">spatiocyte.SpatiocyteWorld</span></code>, <code class="docutils literal notranslate"><span class="pre">egfrd.EGFRDWorld</span></code>, <code class="docutils literal notranslate"><span class="pre">bd.BDWorld</span></code>, <code class="docutils literal notranslate"><span class="pre">meso.MesoscopicWorld</span></code>, <code class="docutils literal notranslate"><span class="pre">gillespie.GillespieWorld</span></code>, and <code class="docutils literal notranslate"><span class="pre">ode.ODEWorld</span></code>.</p>
+<p>In the most of softwares, the initial condition is supposed to be a part of <code class="docutils literal notranslate"><span class="pre">Model</span></code>. But, in E-Cell4, the initial condition must be set up as <code class="docutils literal notranslate"><span class="pre">World</span></code> separately from <code class="docutils literal notranslate"><span class="pre">Model</span></code>. <code class="docutils literal notranslate"><span class="pre">World</span></code> stores an information about the state, such as a current time, the number of molecules, coordinate of molecules, structures, and random number generator, at a time point. Meanwhile, <code class="docutils literal notranslate"><span class="pre">Model</span></code> contains the type of interactions between molecules and the common properties of molecules. <code class="docutils literal notranslate"><span class="pre">Model</span></code> is reusable
+among algorithms.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ecell4_base.core</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="3.1.-Common-APIs-of-World">
+<h2>3.1. Common APIs of World<a class="headerlink" href="#3.1.-Common-APIs-of-World" title="Permalink to this headline">¶</a></h2>
+<p>Even though <code class="docutils literal notranslate"><span class="pre">World</span></code> describes the spatial representation specific to the corresponding algorithm, it has compatible APIs. In this section, we introduce the common interfaces of the six <code class="docutils literal notranslate"><span class="pre">World</span></code> classes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ecell4_base</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">World</span></code> classes accept different sets of arguments in the constructor, which determine the parameters specific to the algorithm. However, at least, all <code class="docutils literal notranslate"><span class="pre">World</span></code> classes can be instantiated only with their size, named <code class="docutils literal notranslate"><span class="pre">edge_lengths</span></code>. The type of <code class="docutils literal notranslate"><span class="pre">edge_lengths</span></code> is <code class="docutils literal notranslate"><span class="pre">Real3</span></code>, which represents a triplet of <code class="docutils literal notranslate"><span class="pre">Real</span></code>s. In E-Cell4, all 3-dimensional positions are treated as a <code class="docutils literal notranslate"><span class="pre">Real3</span></code>. See also <a class="reference external" href="tutorial8.html">8. More about 1. Brief Tour of E-Cell4 Simulations</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">edge_lengths</span> <span class="o">=</span> <span class="n">Real3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">edge_lengths</span><span class="p">)</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">edge_lengths</span><span class="p">)</span>
+<span class="n">w3</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">edge_lengths</span><span class="p">)</span>
+<span class="n">w4</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">edge_lengths</span><span class="p">)</span>
+<span class="n">w5</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">edge_lengths</span><span class="p">)</span>
+<span class="n">w6</span> <span class="o">=</span> <span class="n">egfrd</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">edge_lengths</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">World</span></code> has getter methods for the size and volume.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w1</span><span class="o">.</span><span class="n">volume</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w2</span><span class="o">.</span><span class="n">volume</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w3</span><span class="o">.</span><span class="n">volume</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w4</span><span class="o">.</span><span class="n">volume</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">w5</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w5</span><span class="o">.</span><span class="n">volume</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w6</span><span class="o">.</span><span class="n">volume</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1.0, 2.0, 3.0) 6.0
+(1.0, 2.0, 3.0) 6.0
+(1.0124557603503803, 2.0091789367798976, 3.0) 6.102614364352381
+(1.0, 2.0, 3.0) 6.0
+(1.0, 2.0, 3.0) 6.0
+(1.0, 2.0, 3.0) 6.0
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spatiocyte.World</span></code> (<code class="docutils literal notranslate"><span class="pre">w3</span></code>) would have a bit larger volume to fit regular hexagonal close-packed (HCP) lattice.</p>
+<p>Next, let’s add molecules into the World. Here, you must give <code class="docutils literal notranslate"><span class="pre">Species</span></code> attributed with <strong>radius</strong> and <strong>D</strong> to tell the shape of molecules. In the example below <strong>0.0025</strong> corresponds to <strong>radius</strong> and <strong>1</strong> to <strong>D</strong>. Positions of the molecules are randomly determined in the <code class="docutils literal notranslate"><span class="pre">World</span></code> if needed. <strong>10</strong> in <strong>add_molecules</strong> function represents the number of molecules to be added.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>After a model is bound to the world, you do not need to rewrite the <strong>radius</strong> and <strong>D</strong> once set in <code class="docutils literal notranslate"><span class="pre">Species</span></code> (unless you want to change it).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">m</span> <span class="o">=</span> <span class="n">NetworkModel</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">add_species_attribute</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">add_species_attribute</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">w1</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">w1</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Similarly, <code class="docutils literal notranslate"><span class="pre">remove_molecules</span></code> and <code class="docutils literal notranslate"><span class="pre">num_molecules_exact</span></code> are also available.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w1</span><span class="o">.</span><span class="n">remove_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">remove_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">remove_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">remove_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">remove_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">remove_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules_exact</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10 10 10 10 10 10
+15 15 15 15 15 15
+</pre></div></div>
+</div>
+<p>Unlike <code class="docutils literal notranslate"><span class="pre">num_molecules_exact</span></code>, <code class="docutils literal notranslate"><span class="pre">num_molecules</span></code> returns the numbers that match a given <code class="docutils literal notranslate"><span class="pre">Species</span></code> in rule-based fashion. When all <code class="docutils literal notranslate"><span class="pre">Species</span></code> in the <code class="docutils literal notranslate"><span class="pre">World</span></code> has a single <code class="docutils literal notranslate"><span class="pre">UnitSpecies</span></code> with no sites, <code class="docutils literal notranslate"><span class="pre">num_molecules</span></code> is same with <code class="docutils literal notranslate"><span class="pre">num_molecules_exact</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10 10 10 10 10 10
+15 15 15 15 15 15
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">World</span></code> holds its simulation time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w2</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w3</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w4</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w5</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w6</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">set_t</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">set_t</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">set_t</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">set_t</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">set_t</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">set_t</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w2</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w3</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w4</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w5</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">w6</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.0 0.0 0.0 0.0 0.0 0.0
+1.0 1.0 1.0 1.0 1.0 1.0
+</pre></div></div>
+</div>
+<p>Finally, you can <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">load</span></code> the state of a <code class="docutils literal notranslate"><span class="pre">World</span></code> into/from a HDF5 file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w1</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;gillespie.h5&quot;</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;ode.h5&quot;</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;spatiocyte.h5&quot;</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;bd.h5&quot;</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;meso.h5&quot;</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;egfrd.h5&quot;</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">w3</span><span class="p">,</span> <span class="n">w4</span><span class="p">,</span> <span class="n">w5</span><span class="p">,</span> <span class="n">w6</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w1</span> <span class="o">=</span> <span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w3</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w4</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w5</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w6</span> <span class="o">=</span> <span class="n">egfrd</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w1</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w1</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w1</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w2</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w3</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w4</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w5</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w5</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w5</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w6</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.0 (1.0, 1.0, 1.0) 1.0 0 0
+0.0 (1.0, 1.0, 1.0) 1.0 0 0
+0.0 (1.0124557603503803, 1.0045894683899488, 1.0) 1.0171023940587303 0 0
+0.0 (1.0, 1.0, 1.0) 1.0 0 0
+0.0 (1.0, 1.0, 1.0) 1.0 0 0
+0.0 (1.0, 1.0, 1.0) 1.0 0 0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w1</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;gillespie.h5&quot;</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;ode.h5&quot;</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;spatiocyte.h5&quot;</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;bd.h5&quot;</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;meso.h5&quot;</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;egfrd.h5&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w1</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w1</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w1</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w2</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w2</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w3</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w3</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w4</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w4</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w5</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w5</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w5</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w5</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">edge_lengths</span><span class="p">()),</span> <span class="n">w6</span><span class="o">.</span><span class="n">volume</span><span class="p">(),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)),</span> <span class="n">w6</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)))</span>
+<span class="k">del</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">w3</span><span class="p">,</span> <span class="n">w4</span><span class="p">,</span> <span class="n">w5</span><span class="p">,</span> <span class="n">w6</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.0 (1.0, 2.0, 3.0) 6.0 10 15
+1.0 (1.0, 2.0, 3.0) 6.0 10 15
+1.0 (1.0124557603503803, 2.0091789367798976, 3.0) 6.102614364352381 10 15
+1.0 (1.0, 2.0, 3.0) 6.0 10 15
+1.0 (1.0, 2.0, 3.0) 6.0 10 15
+1.0 (1.0, 2.0, 3.0) 6.0 10 15
+</pre></div></div>
+</div>
+<p>All the <code class="docutils literal notranslate"><span class="pre">World</span></code> classes also accept a HDF5 file path as an unique argument of the constructor.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="s2">&quot;gillespie.h5&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="s2">&quot;ode.h5&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="s2">&quot;spatiocyte.h5&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bd</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="s2">&quot;bd.h5&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="s2">&quot;meso.h5&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">egfrd</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="s2">&quot;egfrd.h5&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.0
+1.0
+1.0
+1.0
+1.0
+1.0
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.2.-How-to-Get-Molecule-Positions">
+<h2>3.2. How to Get Molecule Positions<a class="headerlink" href="#3.2.-How-to-Get-Molecule-Positions" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">World</span></code> also has the common functions to access the coordinates of the molecules.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w1</span> <span class="o">=</span> <span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w3</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w4</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w5</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w6</span> <span class="o">=</span> <span class="n">egfrd</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>First, you can place a molecule at the certain position with <code class="docutils literal notranslate"><span class="pre">new_particle</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">Real3</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="p">(</span><span class="n">pid1</span><span class="p">,</span> <span class="n">p1</span><span class="p">),</span> <span class="n">suc1</span> <span class="o">=</span> <span class="n">w1</span><span class="o">.</span><span class="n">new_particle</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+<span class="p">(</span><span class="n">pid2</span><span class="p">,</span> <span class="n">p2</span><span class="p">),</span> <span class="n">suc2</span> <span class="o">=</span> <span class="n">w2</span><span class="o">.</span><span class="n">new_particle</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+<span class="n">pid3</span> <span class="o">=</span> <span class="n">w3</span><span class="o">.</span><span class="n">new_particle</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+<span class="p">(</span><span class="n">pid4</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="n">suc4</span> <span class="o">=</span> <span class="n">w4</span><span class="o">.</span><span class="n">new_particle</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+<span class="p">(</span><span class="n">pid5</span><span class="p">,</span> <span class="n">p5</span><span class="p">),</span> <span class="n">suc5</span> <span class="o">=</span> <span class="n">w5</span><span class="o">.</span><span class="n">new_particle</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+<span class="p">(</span><span class="n">pid6</span><span class="p">,</span> <span class="n">p6</span><span class="p">),</span> <span class="n">suc6</span> <span class="o">=</span> <span class="n">w6</span><span class="o">.</span><span class="n">new_particle</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">new_particle</span></code> returns a particle created and whether it’s succeeded or not. The resolution in representation of molecules differs. For example, <code class="docutils literal notranslate"><span class="pre">GillespieWorld</span></code> has almost no information about the coordinate of molecules. Thus, it simply ignores the given position, and just counts up the number of molecules here.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ParticleID</span></code> is a pair of <code class="docutils literal notranslate"><span class="pre">Integer</span></code>s named <code class="docutils literal notranslate"><span class="pre">lot</span></code> and <code class="docutils literal notranslate"><span class="pre">serial</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">pid6</span><span class="o">.</span><span class="n">lot</span><span class="p">(),</span> <span class="n">pid6</span><span class="o">.</span><span class="n">serial</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pid6</span> <span class="o">==</span> <span class="n">ParticleID</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0 1
+False
+</pre></div></div>
+</div>
+<p>Particle simulators, i.e. <code class="docutils literal notranslate"><span class="pre">spatiocyte</span></code>, <code class="docutils literal notranslate"><span class="pre">bd</span></code> and <code class="docutils literal notranslate"><span class="pre">egfrd</span></code>, provide an interface to access a particle by its id. <code class="docutils literal notranslate"><span class="pre">has_particle</span></code> returns if a particles exists or not for the given <code class="docutils literal notranslate"><span class="pre">ParticleID</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># print(w1.has_particle(pid1))</span>
+<span class="c1"># print(w2.has_particle(pid2))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">has_particle</span><span class="p">(</span><span class="n">pid3</span><span class="p">))</span>  <span class="c1"># =&gt; True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">has_particle</span><span class="p">(</span><span class="n">pid4</span><span class="p">))</span>  <span class="c1"># =&gt; True</span>
+<span class="c1"># print(w5.has_particle(pid5))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">has_particle</span><span class="p">(</span><span class="n">pid6</span><span class="p">))</span>  <span class="c1"># =&gt; True</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+True
+True
+</pre></div></div>
+</div>
+<p>After checking the existence, you can get the partcle by <code class="docutils literal notranslate"><span class="pre">get_particle</span></code> as follows.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># pid1, p1 = w1.get_particle(pid1)</span>
+<span class="c1"># pid2, p2 = w2.get_particle(pid2)</span>
+<span class="n">pid3</span><span class="p">,</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">w3</span><span class="o">.</span><span class="n">get_particle</span><span class="p">(</span><span class="n">pid3</span><span class="p">)</span>
+<span class="n">pid4</span><span class="p">,</span> <span class="n">p4</span> <span class="o">=</span> <span class="n">w4</span><span class="o">.</span><span class="n">get_particle</span><span class="p">(</span><span class="n">pid4</span><span class="p">)</span>
+<span class="c1"># pid5, p5 = w5.get_particle(pid5)</span>
+<span class="n">pid6</span><span class="p">,</span> <span class="n">p6</span> <span class="o">=</span> <span class="n">w6</span><span class="o">.</span><span class="n">get_particle</span><span class="p">(</span><span class="n">pid6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Particle</span></code> consists of <code class="docutils literal notranslate"><span class="pre">species</span></code>, <code class="docutils literal notranslate"><span class="pre">position</span></code>, <code class="docutils literal notranslate"><span class="pre">radius</span></code> and <code class="docutils literal notranslate"><span class="pre">D</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># print(p1.species().serial(), tuple(p1.position()), p1.radius(), p1.D())</span>
+<span class="c1"># print(p2.species().serial(), tuple(p2.position()), p2.radius(), p2.D())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">species</span><span class="p">()</span><span class="o">.</span><span class="n">serial</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">position</span><span class="p">()),</span> <span class="n">p3</span><span class="o">.</span><span class="n">radius</span><span class="p">(),</span> <span class="n">p3</span><span class="o">.</span><span class="n">D</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p4</span><span class="o">.</span><span class="n">species</span><span class="p">()</span><span class="o">.</span><span class="n">serial</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p4</span><span class="o">.</span><span class="n">position</span><span class="p">()),</span> <span class="n">p4</span><span class="o">.</span><span class="n">radius</span><span class="p">(),</span> <span class="n">p4</span><span class="o">.</span><span class="n">D</span><span class="p">())</span>
+<span class="c1"># print(p5.species().serial(), tuple(p5.position()), p5.radius(), p5.D())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p6</span><span class="o">.</span><span class="n">species</span><span class="p">()</span><span class="o">.</span><span class="n">serial</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">p6</span><span class="o">.</span><span class="n">position</span><span class="p">()),</span> <span class="n">p6</span><span class="o">.</span><span class="n">radius</span><span class="p">(),</span> <span class="n">p6</span><span class="o">.</span><span class="n">D</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+A (0.5062278801751902, 0.5080682368868706, 0.5) 0.0025 1.0
+A (0.5, 0.5, 0.5) 0.0025 1.0
+A (0.5, 0.5, 0.5) 0.0025 1.0
+</pre></div></div>
+</div>
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">spatiocyte</span></code>, a particle position is automatically round to the center of the voxel nearest to the given position.</p>
+<p>You can even move the position of the particle. <code class="docutils literal notranslate"><span class="pre">update_particle</span></code> replace the particle specified with the given <code class="docutils literal notranslate"><span class="pre">ParticleID</span></code> with the given <code class="docutils literal notranslate"><span class="pre">Particle</span></code> and return <code class="docutils literal notranslate"><span class="pre">False</span></code>. If no corresponding particle is found, create new particle and return <code class="docutils literal notranslate"><span class="pre">True</span></code>. If you give a <code class="docutils literal notranslate"><span class="pre">Particle</span></code> with the different type of <code class="docutils literal notranslate"><span class="pre">Species</span></code>, the <code class="docutils literal notranslate"><span class="pre">Species</span></code> of the <code class="docutils literal notranslate"><span class="pre">Particle</span></code> will be also changed.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">newp</span> <span class="o">=</span> <span class="n">Particle</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="n">Real3</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># print(w1.update_particle(pid1, newp))</span>
+<span class="c1"># print(w2.update_particle(pid2, newp))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">update_particle</span><span class="p">(</span><span class="n">pid3</span><span class="p">,</span> <span class="n">newp</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">update_particle</span><span class="p">(</span><span class="n">pid4</span><span class="p">,</span> <span class="n">newp</span><span class="p">))</span>
+<span class="c1"># print(w5.update_particle(pid5, newp))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">update_particle</span><span class="p">(</span><span class="n">pid6</span><span class="p">,</span> <span class="n">newp</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+False
+False
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">list_particles</span></code> and <code class="docutils literal notranslate"><span class="pre">list_particles_exact</span></code> return a list of pairs of <code class="docutils literal notranslate"><span class="pre">ParticleID</span></code> and <code class="docutils literal notranslate"><span class="pre">Particle</span></code> in the <code class="docutils literal notranslate"><span class="pre">World</span></code>. <code class="docutils literal notranslate"><span class="pre">World</span></code> automatically makes up for the gap with random numbers. For example, <code class="docutils literal notranslate"><span class="pre">GillespieWorld</span></code> returns a list of positions randomly distributed in the <code class="docutils literal notranslate"><span class="pre">World</span></code> size.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">list_particles_exact</span><span class="p">(</span><span class="n">sp1</span><span class="p">))</span>
+<span class="c1"># print(w2.list_particles_exact(sp1))  # ODEWorld has no member named list_particles</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">list_particles_exact</span><span class="p">(</span><span class="n">sp1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">list_particles_exact</span><span class="p">(</span><span class="n">sp1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w5</span><span class="o">.</span><span class="n">list_particles_exact</span><span class="p">(</span><span class="n">sp1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">list_particles_exact</span><span class="p">(</span><span class="n">sp1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&lt;ecell4_base.core.ParticleID object at 0x15330c38d1f0&gt;, &lt;ecell4_base.core.Particle object at 0x15330c38d228&gt;)]
+[(&lt;ecell4_base.core.ParticleID object at 0x15330c38d1b8&gt;, &lt;ecell4_base.core.Particle object at 0x15330c38d260&gt;)]
+[(&lt;ecell4_base.core.ParticleID object at 0x15330c38d1f0&gt;, &lt;ecell4_base.core.Particle object at 0x15330c38d308&gt;)]
+[(&lt;ecell4_base.core.ParticleID object at 0x15330c38d1b8&gt;, &lt;ecell4_base.core.Particle object at 0x15330c38d228&gt;)]
+[(&lt;ecell4_base.core.ParticleID object at 0x15330c38d1f0&gt;, &lt;ecell4_base.core.Particle object at 0x15330c38d260&gt;)]
+</pre></div></div>
+</div>
+<p>You can remove a specific particle with <code class="docutils literal notranslate"><span class="pre">remove_particle</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># w1.remove_particle(pid1)</span>
+<span class="c1"># w2.remove_particle(pid2)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">remove_particle</span><span class="p">(</span><span class="n">pid3</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">remove_particle</span><span class="p">(</span><span class="n">pid4</span><span class="p">)</span>
+<span class="c1"># w5.remove_particle(pid5)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">remove_particle</span><span class="p">(</span><span class="n">pid6</span><span class="p">)</span>
+
+<span class="c1"># print(w1.has_particle(pid1))</span>
+<span class="c1"># print(w2.has_particle(pid2))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w3</span><span class="o">.</span><span class="n">has_particle</span><span class="p">(</span><span class="n">pid3</span><span class="p">))</span>  <span class="c1"># =&gt; False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w4</span><span class="o">.</span><span class="n">has_particle</span><span class="p">(</span><span class="n">pid4</span><span class="p">))</span>  <span class="c1"># =&gt; False</span>
+<span class="c1"># print(w5.has_particle(pid5))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w6</span><span class="o">.</span><span class="n">has_particle</span><span class="p">(</span><span class="n">pid6</span><span class="p">))</span>  <span class="c1"># =&gt; False</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+False
+False
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.3.-Lattice-based-Coordinate">
+<h2>3.3. Lattice-based Coordinate<a class="headerlink" href="#3.3.-Lattice-based-Coordinate" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the common interface, each <code class="docutils literal notranslate"><span class="pre">World</span></code> can have their own interfaces. As an example, we explain methods to handle lattice-based coordinate here. <code class="docutils literal notranslate"><span class="pre">SpatiocyteWorld</span></code> is based on a space discretized to hexiagonal close packing lattices, <code class="docutils literal notranslate"><span class="pre">LatticeSpace</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">voxel_radius</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The size of a single lattice, called <code class="docutils literal notranslate"><span class="pre">Voxel</span></code>, can be obtained by <code class="docutils literal notranslate"><span class="pre">voxel_radius()</span></code>. <code class="docutils literal notranslate"><span class="pre">SpatiocyteWorld</span></code> has methods to get the numbers of rows, columns, and layers. These sizes are automatically calculated based on the given <code class="docutils literal notranslate"><span class="pre">edge_lengths</span></code> at the construction.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">voxel_radius</span><span class="p">())</span>  <span class="c1"># =&gt; 0.01</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">()))</span>  <span class="c1"># =&gt; (64, 152, 118)</span>
+<span class="c1"># print(w.col_size(), w.row_size(), w.layer_size())  # =&gt; (64, 152, 118)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>  <span class="c1"># =&gt; 1147904 = 64 * 152 * 118</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.01
+(64, 152, 118)
+1147904
+</pre></div></div>
+</div>
+<p>A position in the lattice-based space is treated as an <code class="docutils literal notranslate"><span class="pre">Integer3</span></code>, column, row and layer, called a global coordinate. Thus, <code class="docutils literal notranslate"><span class="pre">SpatiocyteWorld</span></code> provides the function to convert the <code class="docutils literal notranslate"><span class="pre">Real3</span></code> into a lattice-based coordinate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># p1 = Real3(0.5, 0.5, 0.5)</span>
+<span class="c1"># g1 = w.position2global(p1)</span>
+<span class="c1"># p2 = w.global2position(g1)</span>
+<span class="c1"># print(tuple(g1))  # =&gt; (31, 25, 29)</span>
+<span class="c1"># print(tuple(p2))  # =&gt; (0.5062278801751902, 0.5080682368868706, 0.5)</span>
+</pre></div>
+</div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">SpatiocyteWorld</span></code>, the global coordinate is translated to a single integer. It is just called a coordinate. You can also treat the coordinate as in the same way with a global coordinate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># p1 = Real3(0.5, 0.5, 0.5)</span>
+<span class="c1"># c1 = w.position2coordinate(p1)</span>
+<span class="c1"># p2 = w.coordinate2position(c1)</span>
+<span class="c1"># g1 = w.coord2global(c1)</span>
+<span class="c1"># print(c1)  # =&gt; 278033</span>
+<span class="c1"># print(tuple(p2))  # =&gt; (0.5062278801751902, 0.5080682368868706, 0.5)</span>
+<span class="c1"># print(tuple(g1))  # =&gt; (31, 25, 29)</span>
+</pre></div>
+</div>
+</div>
+<p>With these coordinates, you can handle a <code class="docutils literal notranslate"><span class="pre">Voxel</span></code>, which represents a <code class="docutils literal notranslate"><span class="pre">Particle</span></code> object. Instead of <code class="docutils literal notranslate"><span class="pre">new_particle</span></code>, <code class="docutils literal notranslate"><span class="pre">new_voxel</span></code> provides the way to create a new <code class="docutils literal notranslate"><span class="pre">Voxel</span></code> with a coordinate.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># c1 = w.position2coordinate(Real3(0.5, 0.5, 0.5))</span>
+<span class="c1"># ((pid, v), is_succeeded) = w.new_voxel(Species(&quot;A&quot;), c1)</span>
+<span class="c1"># print(pid, v, is_succeeded)</span>
+</pre></div>
+</div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">Voxel</span></code> consists of <code class="docutils literal notranslate"><span class="pre">species</span></code>, <code class="docutils literal notranslate"><span class="pre">coordinate</span></code>, <code class="docutils literal notranslate"><span class="pre">radius</span></code> and <code class="docutils literal notranslate"><span class="pre">D</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># print(v.species().serial(), v.coordinate(), v.radius(), v.D())  # =&gt; (u&#39;A&#39;, 278033, 0.0025, 1.0)</span>
+</pre></div>
+</div>
+</div>
+<p>Of course, you can get a voxel and list voxels with <code class="docutils literal notranslate"><span class="pre">get_voxel</span></code> and <code class="docutils literal notranslate"><span class="pre">list_voxels_exact</span></code> similar to <code class="docutils literal notranslate"><span class="pre">get_particle</span></code> and <code class="docutils literal notranslate"><span class="pre">list_particles_exact</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># print(w.num_voxels_exact(Species(&quot;A&quot;)))</span>
+<span class="c1"># print(w.list_voxels_exact(Species(&quot;A&quot;)))</span>
+<span class="c1"># print(w.get_voxel(pid))</span>
+</pre></div>
+</div>
+</div>
+<p>You can move and update the voxel with <code class="docutils literal notranslate"><span class="pre">update_voxel</span></code> corresponding to <code class="docutils literal notranslate"><span class="pre">update_particle</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># c2 = w.position2coordinate(Real3(0.5, 0.5, 1.0))</span>
+<span class="c1"># w.update_voxel(pid, Voxel(v.species(), c2, v.radius(), v.D()))</span>
+<span class="c1"># pid, newv = w.get_voxel(pid)</span>
+<span class="c1"># print(c2)  # =&gt; 278058</span>
+<span class="c1"># print(newv.species().serial(), newv.coordinate(), newv.radius(), newv.D())  # =&gt; (u&#39;A&#39;, 278058, 0.0025, 1.0)</span>
+<span class="c1"># print(w.num_voxels_exact(Species(&quot;A&quot;)))  # =&gt; 1</span>
+</pre></div>
+</div>
+</div>
+<p>Finally, <code class="docutils literal notranslate"><span class="pre">remove_voxel</span></code> remove a voxel as <code class="docutils literal notranslate"><span class="pre">remove_particle</span></code> does.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># print(w.has_voxel(pid))  # =&gt; True</span>
+<span class="c1"># w.remove_voxel(pid)</span>
+<span class="c1"># print(w.has_voxel(pid))  # =&gt; False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="3.4-Structure">
+<h2>3.4 Structure<a class="headerlink" href="#3.4-Structure" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w1</span> <span class="o">=</span> <span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w3</span> <span class="o">=</span> <span class="n">spatiocyte</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w4</span> <span class="o">=</span> <span class="n">bd</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w5</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+<span class="n">w6</span> <span class="o">=</span> <span class="n">egfrd</span><span class="o">.</span><span class="n">World</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>By using a <code class="docutils literal notranslate"><span class="pre">Shape</span></code> object, you can confine initial positions of molecules to a part of <code class="docutils literal notranslate"><span class="pre">World</span></code>. In the case below, 60 molecules are positioned inside the given <code class="docutils literal notranslate"><span class="pre">Sphere</span></code>. Diffusion of the molecules placed here is <strong>NOT</strong> restricted in the <code class="docutils literal notranslate"><span class="pre">Shape</span></code>. This <code class="docutils literal notranslate"><span class="pre">Shape</span></code> is only for the initialization.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">sphere</span><span class="p">)</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">sphere</span><span class="p">)</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">sphere</span><span class="p">)</span>
+<span class="n">w4</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">sphere</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">sphere</span><span class="p">)</span>
+<span class="n">w6</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp1</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">sphere</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>A property of <code class="docutils literal notranslate"><span class="pre">Species</span></code>, <code class="docutils literal notranslate"><span class="pre">'location'</span></code>, is available to restrict diffusion of molecules. <code class="docutils literal notranslate"><span class="pre">'location'</span></code> is not fully supported yet, but only supported in <code class="docutils literal notranslate"><span class="pre">spatiocyte</span></code> and <code class="docutils literal notranslate"><span class="pre">meso</span></code>. <code class="docutils literal notranslate"><span class="pre">add_structure</span></code> defines a new structure given as a pair of <code class="docutils literal notranslate"><span class="pre">Species</span></code> and <code class="docutils literal notranslate"><span class="pre">Shape</span></code>.</p>
+<p>NOTICE: To use <code class="docutils literal notranslate"><span class="pre">add_structure</span></code> with <code class="docutils literal notranslate"><span class="pre">spatiocyte</span></code>, you should define a model to describe the attributes of your <code class="docutils literal notranslate"><span class="pre">Species</span></code> and bind it to an instance of <code class="docutils literal notranslate"><span class="pre">spatiocyte.World</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># The below codes defines a model and bind it to w3(spatiocyte world).</span>
+<span class="c1"># Here, the model contains a species &#39;B&#39; for the following context.</span>
+<span class="kn">from</span> <span class="nn">ecell4</span> <span class="kn">import</span> <span class="n">species_attributes</span><span class="p">,</span> <span class="n">get_model</span>
+<span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">M</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;dimension&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="n">B</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="s1">&#39;M&#39;</span><span class="p">}</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">membrane</span> <span class="o">=</span> <span class="n">SphericalSurface</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="mf">0.4</span><span class="p">)</span>  <span class="c1"># This is equivalent to call `Sphere(Real3(0.5, 0.5, 0.5), 0.4).surface()`</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">add_structure</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">),</span> <span class="n">membrane</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">add_structure</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">),</span> <span class="n">membrane</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>After defining a structure, you can bind molecules to the structure as follows:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sp2</span> <span class="o">=</span> <span class="n">Species</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">)</span>  <span class="c1"># `&#39;location&#39;` is the fourth argument</span>
+<span class="n">w3</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp2</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">w5</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">sp2</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The molecules bound to a <code class="docutils literal notranslate"><span class="pre">Species</span></code> named <code class="docutils literal notranslate"><span class="pre">B</span></code> diffuse on a structure named <code class="docutils literal notranslate"><span class="pre">M</span></code>, which has a shape of <code class="docutils literal notranslate"><span class="pre">SphericalSurface</span></code> (a hollow sphere). In <code class="docutils literal notranslate"><span class="pre">spatiocyte</span></code>, a structure is represented as a set of particles with <code class="docutils literal notranslate"><span class="pre">Species</span></code> <code class="docutils literal notranslate"><span class="pre">M</span></code> occupying a voxel. It means that molecules not belonging to the structure is not able to overlap the voxel and it causes a collision. On the other hand, in <code class="docutils literal notranslate"><span class="pre">meso</span></code>, a structure means a list of subvolumes. Thus, a structure doesn’t avoid an incursion of other
+particles.</p>
+</div>
+<div class="section" id="3.5.-Random-Number-Generator">
+<h2>3.5. Random Number Generator<a class="headerlink" href="#3.5.-Random-Number-Generator" title="Permalink to this headline">¶</a></h2>
+<p>A random number generator is also a part of <code class="docutils literal notranslate"><span class="pre">World</span></code>. All <code class="docutils literal notranslate"><span class="pre">World</span></code>s except <code class="docutils literal notranslate"><span class="pre">ODEWorld</span></code> store a random number generator, and updates it when the simulation needs a random value. On E-Cell4, only one class <code class="docutils literal notranslate"><span class="pre">GSLRandomNumberGenerator</span></code> is implemented as a random number generator.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rng1</span> <span class="o">=</span> <span class="n">GSLRandomNumberGenerator</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rng1</span><span class="o">.</span><span class="n">uniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[6, 1, 2, 6, 2, 3, 6, 5, 4, 5, 5, 4, 2, 5, 4, 2, 3, 3, 2, 2]
+</pre></div></div>
+</div>
+<p>With no argument, the random number generator is always initialized with a seed, <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rng2</span> <span class="o">=</span> <span class="n">GSLRandomNumberGenerator</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rng2</span><span class="o">.</span><span class="n">uniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)])</span>  <span class="c1"># =&gt; same as above</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[6, 1, 2, 6, 2, 3, 6, 5, 4, 5, 5, 4, 2, 5, 4, 2, 3, 3, 2, 2]
+</pre></div></div>
+</div>
+<p>You can initialize the seed with an integer as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rng2</span> <span class="o">=</span> <span class="n">GSLRandomNumberGenerator</span><span class="p">()</span>
+<span class="n">rng2</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rng2</span><span class="o">.</span><span class="n">uniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[6, 5, 2, 4, 1, 1, 3, 5, 2, 6, 4, 1, 2, 5, 2, 5, 1, 2, 2, 6]
+</pre></div></div>
+</div>
+<p>When you call the <code class="docutils literal notranslate"><span class="pre">seed</span></code> function with no input, the seed is drawn from the current time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rng2</span> <span class="o">=</span> <span class="n">GSLRandomNumberGenerator</span><span class="p">()</span>
+<span class="n">rng2</span><span class="o">.</span><span class="n">seed</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">rng2</span><span class="o">.</span><span class="n">uniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[3, 3, 1, 2, 2, 3, 4, 6, 3, 6, 4, 6, 5, 5, 3, 4, 1, 1, 1, 1]
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">GSLRandomNumberGenerator</span></code> provides several ways to get a random number.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">rng1</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rng1</span><span class="o">.</span><span class="n">uniform_int</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rng1</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.03033520421013236
+33
+0.8935555455208181
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">World</span></code> accepts a random number generator at the construction. As a default, <code class="docutils literal notranslate"><span class="pre">GSLRandomNumberGenerator()</span></code> is used. Thus, when you don’t give a generator, behavior of the simulation is always same (determinisitc).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">GSLRandomNumberGenerator</span><span class="p">()</span>
+<span class="n">rng</span><span class="o">.</span><span class="n">seed</span><span class="p">()</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>You can access the <code class="docutils literal notranslate"><span class="pre">GSLRandomNumberGenerator</span></code> in a <code class="docutils literal notranslate"><span class="pre">World</span></code> through <code class="docutils literal notranslate"><span class="pre">rng</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">rng</span><span class="p">()</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.4002890670672059
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">rng()</span></code> returns a shared pointer to the <code class="docutils literal notranslate"><span class="pre">GSLRandomNumberGenerator</span></code>. Thus, in the example above, <code class="docutils literal notranslate"><span class="pre">rng</span></code> and <code class="docutils literal notranslate"><span class="pre">w1.rng()</span></code> point exactly the same thing.</p>
+</div>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span>
+      ← <a href="tutorial02.html" title="2. How to Build a Model">2. How to Build a Model</a>
+    </span>
+    <span style="float:right">
+      <a href="tutorial04.html" title="4. How to Run a Simulation">4. How to Run a Simulation</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>

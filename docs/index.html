@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Cell System version 4 &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="genindex.html"/>
+      <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="#"/>
+      <link rel="next" title="Installation of the E-Cell System Version 4" href="installation.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="E-Cell System version 4">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="index">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="#">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="#">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+<ul>
+<li><a class="reference internal" href="#">E-Cell System version 4</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#tutorials">Tutorials</a></li>
+<li><a class="reference internal" href="#models">Models</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#for-developers">For Developers</a></li>
+<li><a class="reference internal" href="#citation">Citation</a></li>
+<li><a class="reference internal" href="#licensing-terms">Licensing Terms</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+<li><a class="reference internal" href="#links">Links</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div id="searchbox">
+  <form class="search" action="search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  <img alt="_images/ecell-logo-with-title.png" src="_images/ecell-logo-with-title.png" />
+<div class="section" id="e-cell-system-version-4">
+<h1>E-Cell System version 4<a class="headerlink" href="#e-cell-system-version-4" title="Permalink to this headline">¶</a></h1>
+<p>The E-Cell System is a software platform for modeling, simulation and analysis of complex, heterogeneous and multi-scale systems like the cell.
+Its latest version, E-Cell4, accepts multi-algorithms, multi-timescales and multi-spatial-representations as its central feature.
+E-Cell4 is a free and open-source software licensed under the GNU General Public License version 3. The source code is available on GitHub (<a class="reference external" href="https://github.com/ecell/ecell4">ecell4</a> and <a class="reference external" href="https://github.com/ecell/ecell4_base">ecell4_base</a>).
+This document is generated from <a class="reference external" href="https://github.com/ecell/ecell4_docs">ecell4_docs</a>.</p>
+<p>A Slack workspace is open for questions <a class="reference external" href="https://ecell-project.herokuapp.com/">here</a>.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation of the E-Cell System Version 4</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Single particle simulations, i.e. <a class="reference external" href="http://gfrd.org">The enhanced Green’s Function Reaction Dynamics (eGFRD) method</a>, <a class="reference external" href="http://spatiocyte.org">Spatiocyte</a> (a lattice-based method), and the Reaction Brownian Dynamics (RBD) method</p></li>
+<li><p>Ordinary differential equations, Gillespie algorithm (the direct method), and spatial Gillespie algorithm (the next subvolume method)</p></li>
+<li><p>Rule-based modeling</p></li>
+<li><p>Python programmable</p></li>
+</ul>
+</div>
+<div class="section" id="tutorials">
+<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="top.html">Welcome to E-Cell4 in Jupyter Notebook!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial01.html">1. Brief Tour of E-Cell4 Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial02.html">2. How to Build a Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial03.html">3. How to Setup the Initial Condition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial04.html">4. How to Run a Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial05.html">5. How to Log and Visualize Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial06.html">6. How to Solve ODEs with Rate Law Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial07.html">7. Introduction of Rule-based Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial08.html">8. More about 1. Brief Tour of E-Cell4 Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial09.html">9. Spatial Gillespie Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial10.html">10. Spatiocyte Simulations at Single-Molecule Resolution</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/example01.html">Attractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example02.html">Drosophila Circadian Clock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example03.html">Dual Phosphorylation Cycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example04.html">Simple EGFR model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example05.html">Glycolysis Model and Metabolic Control Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example06.html">Action Potentials in Neurons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example07.html">Lotka-Volterra 2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example08.html">MinDE System with Mesoscopic Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example09.html">MinDE System with Spatiocyte Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example10.html">Simple Equilibrium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example11.html">Tyson1991</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example12.html">How to Use the Unit System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example13.html">Multiary Complex Model of GPCR Signaling Activations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example14.html">The sGFRD Method</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Tests</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tests/Birth_Death.html">Birth-Death</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/Homodimerization_and_Annihilation.html">Homodimerization and Annihilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/Reversible.html">Reversible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/Reversible_Diffusion_limited.html">Reversible (Diffusion-limited)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/MSD.html">Mean Square Displacement (MSD)</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="for-developers">
+<h2>For Developers<a class="headerlink" href="#for-developers" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developers.html">For Developers</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline">¶</a></h2>
+<p>If this package contributes to a project which leads to a scientific publication, I would appreciate a citation.</p>
+<a class="reference external image-reference" href="https://zenodo.org/badge/latestdoi/6348303"><img alt="https://zenodo.org/badge/6348303.svg" src="https://zenodo.org/badge/6348303.svg" /></a>
+</div>
+<div class="section" id="licensing-terms">
+<h2>Licensing Terms<a class="headerlink" href="#licensing-terms" title="Permalink to this headline">¶</a></h2>
+<p>This product is licensed under the terms of the <a class="reference external" href="https://github.com/ecell/ecell4_base/blob/master/LICENSE">GNU General Public License v3</a>.
+See also <a class="reference external" href="https://github.com/ecell/ecell4_base/blob/master/LICENSE">LICENSE</a> for the software included in this product.</p>
+<ul class="simple">
+<li><p>Copyright (c) 2010-, RIKEN</p></li>
+</ul>
+<p>All rights reserved.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/ecell4.html">ecell4 module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/ecell4_base.html">ecell4_base module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">Indices and tables</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="links">
+<h2>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.e-cell.org">https://www.e-cell.org</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ecell/">https://github.com/ecell/</a></p></li>
+<li><p><a class="reference external" href="https://spatiocyte.org/">https://spatiocyte.org/</a></p></li>
+<li><p><a class="reference external" href="https://gfrd.org/">https://gfrd.org/</a></p></li>
+</ul>
+</div>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span style="float:right">
+      <a href="installation.html" title="Installation of the E-Cell System Version 4">Installation of the E-Cell...</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>

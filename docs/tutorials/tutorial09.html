@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9. Spatial Gillespie Method &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="../_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="../genindex.html"/>
+      <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="../index.html"/>
+      <link rel="up" title="&lt;no title&gt;" href="index.html"/>
+      <link rel="next" title="10. Spatiocyte Simulations at Single-Molecule Resolution" href="tutorial10.html"/>
+      <link rel="prev" title="8. More about 1. Brief Tour of E-Cell4 Simulations" href="tutorial08.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="9. Spatial Gillespie Method">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="tutorials/tutorial09">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="../index.html">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="../index.html">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+<ul>
+<li><a class="reference internal" href="#">9. Spatial Gillespie Method</a><ul>
+<li><a class="reference internal" href="#9.1.-Spaces-in-E-Cell4">9.1. Spaces in E-Cell4</a></li>
+<li><a class="reference internal" href="#9.2.-Spatial-Gillespie-Method">9.2. Spatial Gillespie Method</a></li>
+<li><a class="reference internal" href="#9.3.-Defining-Molecular-Diffusion-Coefficient">9.3. Defining Molecular Diffusion Coefficient</a></li>
+<li><a class="reference internal" href="#9.4.-Molecular-localization">9.4. Molecular localization</a></li>
+<li><a class="reference internal" href="#9.5.-Molecular-initial-location-and-the-reaction">9.5. Molecular initial location and the reaction</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div id="searchbox">
+  <form class="search" action="../search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>This page was generated from <a class="reference external" href="https://github.com/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial09.ipynb">tutorials/tutorial09.ipynb</a>.</p>
+<p>Download the <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> for this section: <a class="reference download internal" download="" href="../_downloads/af7c534fba9e96688a4185b6f40b4985/tutorial09.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">tutorial09.ipynb</span></code></a>. <a class="reference external" href="https://nbviewer.jupyter.org/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial09.ipynb">View in nbviewer</a>.</p>
+<a class="reference external image-reference" href="https://colab.research.google.com/github/kaizu/ecell4_docs/blob/latest/en/tutorials/tutorial09.ipynb"><img alt="https://colab.research.google.com/assets/colab-badge.svg" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/kaizu/ecell4_docs/latest?filepath=en/tutorials/tutorial09.ipynb"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" /></a>
+</div>
+<div class="section" id="9.-Spatial-Gillespie-Method">
+<h1>9. Spatial Gillespie Method<a class="headerlink" href="#9.-Spatial-Gillespie-Method" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="9.1.-Spaces-in-E-Cell4">
+<h2>9.1. Spaces in E-Cell4<a class="headerlink" href="#9.1.-Spaces-in-E-Cell4" title="Permalink to this headline">¶</a></h2>
+<p>What the space in E-Cell4 looks like?</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">w1</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">())</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>We created a cube size, <code class="docutils literal notranslate"><span class="pre">1</span></code>, on a side for <code class="docutils literal notranslate"><span class="pre">ode.World</span></code> and <code class="docutils literal notranslate"><span class="pre">gillespie.World</span></code>. In this case the volume only matters, that is</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w3</span> <span class="o">=</span> <span class="n">ode</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># is almost equivalent to &#39;w1&#39;</span>
+<span class="n">w4</span> <span class="o">=</span> <span class="n">gillespie</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">))</span>  <span class="c1"># is almost equivalent to &#39;w2&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>This returns the same results. Because the volume is same as <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>This seems reasonable in homogeneous system, but the cell is NOT homogeneous. So we need to consider a space for molecular localization.</p>
+<p>You can use several types of space and simulation methods in E-Cell4. We show an example with spatial Gillespie method here.</p>
+</div>
+<div class="section" id="9.2.-Spatial-Gillespie-Method">
+<h2>9.2. Spatial Gillespie Method<a class="headerlink" href="#9.2.-Spatial-Gillespie-Method" title="Permalink to this headline">¶</a></h2>
+<p>In E-Cell4, the Spatial Gillespie method is included in <code class="docutils literal notranslate"><span class="pre">meso</span></code> module. Let’s start with <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code> like <code class="docutils literal notranslate"><span class="pre">ode</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">==</span> <span class="n">C</span> <span class="o">|</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">run_simulation</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;meso&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_6_0.png" src="../_images/tutorials_tutorial09_6_0.png" />
+</div>
+</div>
+<p>At the steady state, the number of <code class="docutils literal notranslate"><span class="pre">C</span></code> is given as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{d\mathrm{C}}{dt}=0.01{\cdot}\frac{\mathrm{A}}{V}{\cdot}\frac{\mathrm{B}}{V}-0.3{\cdot}\frac{\mathrm{C}}{V}=0\\
+0.01\left(60-\mathrm{C}\right)^2=0.3\mathrm{C}\times V\\
+\mathrm{C}=30.\end{split}\]</div>
+<p>You will obtain almost the same result with <code class="docutils literal notranslate"><span class="pre">ode</span></code> or <code class="docutils literal notranslate"><span class="pre">gillespie</span></code> (may take longer time than <code class="docutils literal notranslate"><span class="pre">ode</span></code> or <code class="docutils literal notranslate"><span class="pre">gillespie</span></code>). This is not surprising because <code class="docutils literal notranslate"><span class="pre">meso</span></code> module is almost same with Gillespie unless you give additional spatial parameter.</p>
+<p>Next we will decompose <code class="docutils literal notranslate"><span class="pre">run_simulation</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">==</span> <span class="n">C</span> <span class="o">|</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">(),</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># XXX: Point2</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>  <span class="c1"># XXX: Point1</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>  <span class="c1"># XXX: Point1</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">FixedIntervalNumberObserver</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_9_0.png" src="../_images/tutorials_tutorial09_9_0.png" />
+</div>
+</div>
+<p>This is nothing out of the ordinary one except for <code class="docutils literal notranslate"><span class="pre">meso.World</span></code> and <code class="docutils literal notranslate"><span class="pre">meso.Simulator</span></code>, but you can see some new elements.</p>
+<p>First in <code class="docutils literal notranslate"><span class="pre">w.bind_to(m)</span></code> we asscociated a <code class="docutils literal notranslate"><span class="pre">Model</span></code> to the <code class="docutils literal notranslate"><span class="pre">World</span></code>. In the basic exercises before, we did NOT do this. In spatial methods, <code class="docutils literal notranslate"><span class="pre">Species</span></code> attributes are necessary. Do not forget to call this. After that, only the <code class="docutils literal notranslate"><span class="pre">World</span></code> is required to create a <code class="docutils literal notranslate"><span class="pre">meso.Simulator</span></code>.</p>
+<p>Next, the important difference is the second argument for <code class="docutils literal notranslate"><span class="pre">meso.World</span></code>, i.e. <code class="docutils literal notranslate"><span class="pre">Integer3(1,</span> <span class="pre">1,</span> <span class="pre">1)</span></code>. <code class="docutils literal notranslate"><span class="pre">ode.World</span></code> and <code class="docutils literal notranslate"><span class="pre">gillespie.World</span></code> do NOT have this second argument. Before we explain this, let’s change this argument and run the simulation again.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">==</span> <span class="n">C</span> <span class="o">|</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">(),</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>  <span class="c1"># XXX: Point2</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>  <span class="c1"># XXX: Point1</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>  <span class="c1"># XXX: Point1</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">FixedIntervalNumberObserver</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_11_0.png" src="../_images/tutorials_tutorial09_11_0.png" />
+</div>
+</div>
+<div class="line-block">
+<div class="line">You must have the different plot. If you increase value in the <code class="docutils literal notranslate"><span class="pre">Integer3</span></code>, you will have more different one.</div>
+<div class="line">Actually this second argument means the number of spatical partitions. <code class="docutils literal notranslate"><span class="pre">meso</span></code> is almost same with <code class="docutils literal notranslate"><span class="pre">gillespie</span></code>, but <code class="docutils literal notranslate"><span class="pre">meso</span></code> divides the space into cuboids (we call these cuboids subvolumes) and each subvolume has different molecular concentration by contrast <code class="docutils literal notranslate"><span class="pre">gillespie</span></code> has only one uniform closed space. So in the preceding example, we divided <code class="docutils literal notranslate"><span class="pre">1</span></code> cube with sides <code class="docutils literal notranslate"><span class="pre">1</span></code> into <code class="docutils literal notranslate"><span class="pre">64</span></code> (4x4x4) cubes with sides <code class="docutils literal notranslate"><span class="pre">0.25</span></code>. We threw 60 <code class="docutils literal notranslate"><span class="pre">C</span></code> molecules into the <code class="docutils literal notranslate"><span class="pre">World</span></code>. Thus, each
+<code class="docutils literal notranslate"><span class="pre">subvolume</span></code> has 1 species at most.</div>
+</div>
+</div>
+<div class="section" id="9.3.-Defining-Molecular-Diffusion-Coefficient">
+<h2>9.3. Defining Molecular Diffusion Coefficient<a class="headerlink" href="#9.3.-Defining-Molecular-Diffusion-Coefficient" title="Permalink to this headline">¶</a></h2>
+<p>Where the difference is coming from? This is because we do NOT consider molecular diffusion coefficient, although we got a space with <code class="docutils literal notranslate"><span class="pre">meso</span></code>. To setup diffusion coefficient, use <code class="docutils literal notranslate"><span class="pre">Species</span></code> attribute <code class="docutils literal notranslate"><span class="pre">'D'</span></code> in the way described before (<a class="reference external" href="tutorial2.ipynb">2. How to Build a Model</a>). As shown in <a class="reference external" href="tutorial1.ipynb">1. Brief Tour of E-Cell4 Simulations</a>, we use E-Cell4 special notation here.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+    <span class="n">B</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+    <span class="n">C</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+    <span class="c1"># A | B | C | {&#39;D&#39;: 1}  # means the same as above</span>
+
+<span class="n">get_model</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ecell4_base.core.NetworkModel at 0x14f7b3182420&gt;
+</pre></div></div>
+</div>
+<p>You can setup diffusion coefficient with <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">species_attributes():</span></code> statement. Here we set all the diffusion coefficient as <code class="docutils literal notranslate"><span class="pre">1</span></code>. Let’s simulate this model again. Now you must have the almost same result with <code class="docutils literal notranslate"><span class="pre">gillespie</span></code> even with large <code class="docutils literal notranslate"><span class="pre">Integer3</span></code> value (the simulation will takes much longer than <code class="docutils literal notranslate"><span class="pre">gillespie</span></code>).</p>
+<p>How did the molecular diffusion work for the problem? Think about free diffusion (the diffusion coefficient of a Species is <span class="math notranslate nohighlight">\(D\)</span>) in 3D space. The unit of diffusion coefficient is the square of length divided by time like <span class="math notranslate nohighlight">\(\mathrm{\mu m}^2/s\)</span> or <span class="math notranslate nohighlight">\(\mathrm{nm}^2/\mu s\)</span>.</p>
+<p>It is known that the average of the square of point distance from time <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(t\)</span> is equal to <span class="math notranslate nohighlight">\(6Dt\)</span>. Conversely the average of the time scale in a space with length scale <span class="math notranslate nohighlight">\(l\)</span> is about <span class="math notranslate nohighlight">\(l^2/6D\)</span>.</p>
+<p>In the above case, the size of each subvolume is 0.25 and the diffusion coefficient is 1. Thus the time scale is about 0.01 sec. If the molecules of the <code class="docutils literal notranslate"><span class="pre">Species</span></code> <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are in the same subvolume, it takes about 1.5 sec to react, so in most cases the diffusion is faster than the reaction and the molecules move to other subvolume even dissociated in the same subvolume. The smaller <span class="math notranslate nohighlight">\(l\)</span>, the smaller subvolume’s volume <span class="math notranslate nohighlight">\(l^3\)</span>, so the reaction rate after dissociation is faster,
+and the time of the diffusion and the transition between the subvolume gets smaller too.</p>
+</div>
+<div class="section" id="9.4.-Molecular-localization">
+<h2>9.4. Molecular localization<a class="headerlink" href="#9.4.-Molecular-localization" title="Permalink to this headline">¶</a></h2>
+<p>We have used <code class="docutils literal notranslate"><span class="pre">add_molecules</span></code> function to add molecules to <code class="docutils literal notranslate"><span class="pre">World</span></code> in the same manner as <code class="docutils literal notranslate"><span class="pre">ode</span></code> or <code class="docutils literal notranslate"><span class="pre">gillespie</span></code>. Meanwhile in <code class="docutils literal notranslate"><span class="pre">meso.World</span></code>, you can put in molecules according to the spatial presentation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">ones</span><span class="p">(),</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="mi">120</span><span class="p">,</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">meso.World</span></code>, you can set the subvolume and the molecule locations by giving the third argument <code class="docutils literal notranslate"><span class="pre">Integer3</span></code> to <code class="docutils literal notranslate"><span class="pre">add_molecules</span></code>. In the above example, the molecule type <code class="docutils literal notranslate"><span class="pre">A</span></code> spreads all over the space, but the molecule type <code class="docutils literal notranslate"><span class="pre">B</span></code> only locates in a subvolume at the center of the volume. To check this, use <code class="docutils literal notranslate"><span class="pre">num_molecules</span></code> function with a coordinate.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">)))</span>  <span class="c1"># must print 120</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>  <span class="c1"># must print 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">num_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>  <span class="c1"># must print 120</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+120
+0
+120
+</pre></div></div>
+</div>
+<p>Furthermore, if you have Jupyter Notebook environment, you can visualize the molecular localization with <code class="docutils literal notranslate"><span class="pre">ecell4.plotting</span></code> module, <code class="docutils literal notranslate"><span class="pre">plotting.plot_world</span></code> or simply <code class="docutils literal notranslate"><span class="pre">show</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_world</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>  <span class="c1"># or `show(w)`</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_22_0.png" src="../_images/tutorials_tutorial09_22_0.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">plotting.plot_world</span></code> function visualize the location of the molecules in Jupyter Notebook cell by giving the <code class="docutils literal notranslate"><span class="pre">World</span></code>. You can set the molecule size with <code class="docutils literal notranslate"><span class="pre">radius</span></code>. Now you can set the molecular localization to the <code class="docutils literal notranslate"><span class="pre">World</span></code>, next let’s simulate this. In the above example, we set the diffusion coefficient 1 and the World side 1, so 10 seconds is enough to stir this. After the simulation, check the result with calling <code class="docutils literal notranslate"><span class="pre">plotting.plot_world</span></code> again.</p>
+</div>
+<div class="section" id="9.5.-Molecular-initial-location-and-the-reaction">
+<h2>9.5. Molecular initial location and the reaction<a class="headerlink" href="#9.5.-Molecular-initial-location-and-the-reaction" title="Permalink to this headline">¶</a></h2>
+<p>This is an extreme example to check how the molecular localization affects the reaction.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">with</span> <span class="n">species_attributes</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">|</span> <span class="n">B</span> <span class="o">|</span> <span class="n">C</span> <span class="o">|</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">}</span>
+
+<span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+    <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="o">&gt;</span> <span class="n">C</span> <span class="o">|</span> <span class="mf">0.01</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This model consists only of a simple binding reaction. The <code class="docutils literal notranslate"><span class="pre">World</span></code> is a long x axis cuboid, and molecules are located off-center.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mi">1200</span><span class="p">,</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="mi">1200</span><span class="p">,</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_world</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_27_0.png" src="../_images/tutorials_tutorial09_27_0.png" />
+</div>
+</div>
+<p>On a different note, there is a reason not to set <code class="docutils literal notranslate"><span class="pre">Integer3(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></code> or <code class="docutils literal notranslate"><span class="pre">Integer3(9,</span> <span class="pre">0,</span> <span class="pre">0)</span></code>. In E-Cell4, basically we adopt periodic boundary condition for everything. So the forementioned two subvolumes are actually adjoining.</p>
+<p>After realizing the location expected, simulate it with <code class="docutils literal notranslate"><span class="pre">meso.Simulator</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sim</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">obs1</span> <span class="o">=</span> <span class="n">NumberObserver</span><span class="p">((</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">))</span>  <span class="c1"># XXX: saves the numbers after every steps</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">obs1</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">obs1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_29_0.png" src="../_images/tutorials_tutorial09_29_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_30_0.png" src="../_images/tutorials_tutorial09_30_0.png" />
+</div>
+</div>
+<p>To check the effect of initial coordinates, we recommend that you locate the molecules homogeneously with <code class="docutils literal notranslate"><span class="pre">meso</span></code> or simulate with <code class="docutils literal notranslate"><span class="pre">gillespie</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">World</span><span class="p">(</span><span class="n">Real3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Integer3</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">w</span><span class="o">.</span><span class="n">bind_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span> <span class="mi">1200</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">add_molecules</span><span class="p">(</span><span class="n">Species</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">),</span> <span class="mi">1200</span><span class="p">)</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">meso</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">obs2</span> <span class="o">=</span> <span class="n">NumberObserver</span><span class="p">((</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">))</span>  <span class="c1"># XXX: saves the numbers after every steps</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">obs2</span><span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">obs1</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">obs2</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_tutorial09_32_0.png" src="../_images/tutorials_tutorial09_32_0.png" />
+</div>
+</div>
+<p>The solid line is biased case, and the dash line is non-biased. The biased reaction is obviously slow. And you may notice that the shape of time-series is also different between the solid and dash lines. This is because it takes some time for the molecule <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> to collide due to the initial separation. Actually it takes <span class="math notranslate nohighlight">\(4^2/2(D_\mathrm{A}+D_\mathrm{B})=4\)</span> seconds to move the initial distance between <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> (about 4).</p>
+</div>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span>
+      ← <a href="tutorial08.html" title="8. More about 1. Brief Tour of E-Cell4 Simulations">8. More about 1. Brief...</a>
+    </span>
+    <span style="float:right">
+      <a href="tutorial10.html" title="10. Spatiocyte Simulations at Single-Molecule Resolution">10. Spatiocyte Simulations...</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>

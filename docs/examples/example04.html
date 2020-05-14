@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple EGFR model &mdash; E-Cell4 latest documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono"><link rel="stylesheet" href="../_static/typlog.css?v=0.7.3" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme.css?v=0.7.3" type="text/css" />
+      <link rel="index" title="Index" href="../genindex.html"/>
+      <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="E-Cell4 latest documentation" href="../index.html"/>
+      <link rel="up" title="&lt;no title&gt;" href="index.html"/>
+      <link rel="next" title="Glycolysis Model and Metabolic Control Analysis" href="example05.html"/>
+      <link rel="prev" title="Dual Phosphorylation Cycle" href="example03.html"/>
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', '');ga('send', 'pageview');</script>
+  <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="E-Cell4">
+  <meta property="og:title" content="Simple EGFR model">
+    <meta property="og:description" content="A software platform for modeling, simulation and analysis of a cell">
+  <meta name="twitter:card" content="summary">
+</head>
+<body role="document" data-page="examples/example04">
+  <header class="t-head">
+    <div class="t-head_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"/></svg></div>
+    <a class="t-head_logo" href="../index.html">E-Cell4
+    </a>
+  </header>
+  <aside class="t-sidebar">
+    <div class="t-sidebar_close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"/></svg>
+    </div>
+    <div class="inner">
+<a class="logo" href="../index.html">
+    ecell4
+</a><div class="logo_desc">A software platform for modeling, simulation and analysis of a cell</div><div class="globaltoc">
+<ul>
+<li><a class="reference internal" href="#">Simple EGFR model</a></li>
+</ul>
+
+</div>
+<div id="searchbox">
+  <form class="search" action="../search.html" method="get">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="Search" />
+      <button type="submit">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </div>
+  </aside>
+  <div class="t-content">
+    <div class="t-body yue">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js'></script>
+<script>require=requirejs;</script><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>This page was generated from <a class="reference external" href="https://github.com/kaizu/ecell4_docs/blob/latest/en/examples/example04.ipynb">examples/example04.ipynb</a>.</p>
+<p>Download the <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> for this section: <a class="reference download internal" download="" href="../_downloads/c04719ff4f871c9dfc4456137e1e9a4b/example04.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">example04.ipynb</span></code></a>. <a class="reference external" href="https://nbviewer.jupyter.org/github/kaizu/ecell4_docs/blob/latest/en/examples/example04.ipynb">View in nbviewer</a>.</p>
+<a class="reference external image-reference" href="https://colab.research.google.com/github/kaizu/ecell4_docs/blob/latest/en/examples/example04.ipynb"><img alt="https://colab.research.google.com/assets/colab-badge.svg" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/kaizu/ecell4_docs/latest?filepath=en/examples/example04.ipynb"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" /></a>
+</div>
+<div class="section" id="Simple-EGFR-model">
+<h1>Simple EGFR model<a class="headerlink" href="#Simple-EGFR-model" title="Permalink to this headline">¶</a></h1>
+<p>See <a class="reference external" href="http://bionetgen.org/index.php/Simple_EGFR_model">http://bionetgen.org/index.php/Simple_EGFR_model</a> for details.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">ecell4.prelude</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">citation</span><span class="p">(</span><span class="mi">16233948</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<p>Blinov ML, Faeder JR, Goldstein B, Hlavacek WS, A network model of early events in epidermal growth factor receptor signaling that accounts for combinatorial complexity. <em>Bio Systems</em>, <strong>2-3</strong>(83), 136-51, 2006. <a class="reference external" href="https://doi.org/10.1016/j.biosystems.2005.06.014">10.1016/j.biosystems.2005.06.014</a>. PubMed PMID: <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/16233948">16233948</a>.</p>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">NA</span> <span class="o">=</span> <span class="mf">6.02e23</span>  <span class="c1"># Avogadro&#39;s number (molecules/mol)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Fraction of the cell to simulate</span>
+<span class="n">Vo</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="mf">1.0e-10</span>  <span class="c1"># Extracellular volume=1/cell_density (L)</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="mf">3.0e-12</span>  <span class="c1"># Cytoplasmic volume (L)</span>
+
+<span class="n">EGF_init</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">*</span> <span class="mf">1e-9</span> <span class="o">*</span> <span class="n">NA</span> <span class="o">*</span> <span class="n">Vo</span>  <span class="c1"># Initial amount of ligand (20 nM) converted to copies per cell</span>
+
+<span class="c1"># Initial amounts of cellular components (copies per cell)</span>
+<span class="n">EGFR_init</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="mf">1.8e5</span>
+<span class="n">Grb2_init</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="mf">1.5e5</span>
+<span class="n">Sos1_init</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="mf">6.2e4</span>
+
+<span class="c1"># Rate constants</span>
+<span class="c1"># Divide by NA*V to convert bimolecular rate constants</span>
+<span class="c1"># from /M/sec to /(molecule/cell)/sec</span>
+<span class="n">kp1</span> <span class="o">=</span> <span class="mf">9.0e7</span> <span class="o">/</span> <span class="p">(</span><span class="n">NA</span> <span class="o">*</span> <span class="n">Vo</span><span class="p">)</span>  <span class="c1"># ligand-monomer binding</span>
+<span class="n">km1</span> <span class="o">=</span> <span class="mf">0.06</span>  <span class="c1"># ligand-monomer dissociation</span>
+<span class="n">kp2</span> <span class="o">=</span> <span class="mf">1.0e7</span> <span class="o">/</span> <span class="p">(</span><span class="n">NA</span> <span class="o">*</span> <span class="n">V</span><span class="p">)</span>  <span class="c1"># aggregation of bound monomers</span>
+<span class="n">km2</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># dissociation of bound monomers</span>
+<span class="n">kp3</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># dimer transphosphorylation</span>
+<span class="n">km3</span> <span class="o">=</span> <span class="mf">4.505</span>  <span class="c1"># dimer dephosphorylation</span>
+<span class="n">kp4</span> <span class="o">=</span> <span class="mf">1.5e6</span> <span class="o">/</span> <span class="p">(</span><span class="n">NA</span> <span class="o">*</span> <span class="n">V</span><span class="p">)</span>  <span class="c1"># binding of Grb2 to receptor</span>
+<span class="n">km4</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># dissociation of Grb2 from receptor</span>
+<span class="n">kp5</span> <span class="o">=</span> <span class="mf">1.0e7</span> <span class="o">/</span> <span class="p">(</span><span class="n">NA</span> <span class="o">*</span> <span class="n">V</span><span class="p">)</span>  <span class="c1"># binding of Grb2 to Sos1</span>
+<span class="n">km5</span> <span class="o">=</span> <span class="mf">0.06</span>  <span class="c1"># dissociation of Grb2 from Sos1</span>
+<span class="n">deg</span> <span class="o">=</span> <span class="mf">0.01</span>  <span class="c1"># degradation of receptor dimers</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">reaction_rules</span><span class="p">():</span>
+  <span class="c1"># R1: Ligand-receptor binding</span>
+  <span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">CR1</span><span class="p">)</span> <span class="o">+</span> <span class="n">EGF</span><span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="o">==</span> <span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="o">^</span><span class="mi">1</span><span class="p">,</span> <span class="n">CR1</span><span class="p">)</span><span class="o">.</span><span class="n">EGF</span><span class="p">(</span><span class="n">R</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">kp1</span><span class="p">,</span> <span class="n">km1</span><span class="p">)</span>
+
+  <span class="c1"># R2: Receptor-aggregation</span>
+  <span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="o">^</span><span class="n">_</span><span class="p">,</span> <span class="n">CR1</span><span class="p">)</span> <span class="o">+</span> <span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="o">^</span><span class="n">_</span><span class="p">,</span> <span class="n">CR1</span><span class="p">)</span> <span class="o">==</span> <span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="o">^</span><span class="n">_</span><span class="p">,</span><span class="n">CR1</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="o">^</span><span class="n">_</span><span class="p">,</span><span class="n">CR1</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">kp2</span><span class="p">,</span> <span class="n">km2</span><span class="p">)</span>
+
+  <span class="c1"># R3: Transphosphorylation of EGFR by RTK</span>
+  <span class="n">EGFR</span><span class="p">(</span><span class="n">CR1</span><span class="o">^</span><span class="n">_</span><span class="p">,</span> <span class="n">Y1068</span><span class="o">=</span><span class="n">U</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">EGFR</span><span class="p">(</span><span class="n">CR1</span><span class="o">^</span><span class="n">_</span><span class="p">,</span> <span class="n">Y1068</span><span class="o">=</span><span class="n">P</span><span class="p">)</span> <span class="o">|</span> <span class="n">kp3</span>
+
+  <span class="c1"># R4: Dephosphorylation</span>
+  <span class="n">EGFR</span><span class="p">(</span><span class="n">Y1068</span><span class="o">=</span><span class="n">P</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">EGFR</span><span class="p">(</span><span class="n">Y1068</span><span class="o">=</span><span class="n">U</span><span class="p">)</span> <span class="o">|</span> <span class="n">km3</span>
+
+  <span class="c1"># R5: Grb2 binding to pY1068</span>
+  <span class="n">EGFR</span><span class="p">(</span><span class="n">Y1068</span><span class="o">=</span><span class="n">P</span><span class="p">)</span> <span class="o">+</span> <span class="n">Grb2</span><span class="p">(</span><span class="n">SH2</span><span class="p">)</span> <span class="o">==</span> <span class="n">EGFR</span><span class="p">(</span><span class="n">Y1068</span><span class="o">=</span><span class="n">P</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">Grb2</span><span class="p">(</span><span class="n">SH2</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">kp4</span><span class="p">,</span> <span class="n">km4</span><span class="p">)</span>
+
+  <span class="c1"># R6: Grb2 binding to Sos1</span>
+  <span class="n">Grb2</span><span class="p">(</span><span class="n">SH3</span><span class="p">)</span> <span class="o">+</span> <span class="n">Sos1</span><span class="p">(</span><span class="n">PxxP</span><span class="p">)</span> <span class="o">==</span> <span class="n">Grb2</span><span class="p">(</span><span class="n">SH3</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">Sos1</span><span class="p">(</span><span class="n">PxxP</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">kp5</span><span class="p">,</span> <span class="n">km5</span><span class="p">)</span>
+
+  <span class="c1"># R7: Receptor dimer internalization/degradation</span>
+  <span class="p">(</span><span class="n">EGF</span><span class="p">(</span><span class="n">R</span><span class="o">^</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">EGF</span><span class="p">(</span><span class="n">R</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="o">^</span><span class="mi">1</span><span class="p">,</span><span class="n">CR1</span><span class="o">^</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">EGFR</span><span class="p">(</span><span class="n">L</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="n">CR1</span><span class="o">^</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">~</span><span class="n">EmptySet</span> <span class="o">|</span> <span class="n">deg</span>
+       <span class="o">|</span> <span class="n">ReactionRule</span><span class="o">.</span><span class="n">STRICT</span> <span class="o">|</span> <span class="n">ReactionRule</span><span class="o">.</span><span class="n">DESTROY</span><span class="p">)</span>
+
+<span class="n">m1</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">is_netfree</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">effective</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+EGFR(L, CR1) + EGF(R) &gt; EGFR(L ^ 1, CR1).EGF(R ^ 1) | 1.495016611295681e-06
+EGFR(L ^ 1, CR1).EGF(R ^ 1) &gt; EGFR(L, CR1) + EGF(R) | 0.06
+EGFR(L ^ _, CR1) + EGFR(L ^ _, CR1) &gt; EGFR(L ^ _, CR1 ^ 1).EGFR(L ^ _, CR1 ^ 1) | 5.537098560354375e-06
+EGFR(L ^ _, CR1 ^ 1).EGFR(L ^ _, CR1 ^ 1) &gt; EGFR(L ^ _, CR1) + EGFR(L ^ _, CR1) | 0.1
+EGFR(CR1 ^ _, Y1068=U) &gt; EGFR(CR1 ^ _, Y1068=P) | 0.5
+EGFR(Y1068=P) &gt; EGFR(Y1068=U) | 4.505
+EGFR(Y1068=P) + Grb2(SH2) &gt; EGFR(Y1068=P ^ 1).Grb2(SH2 ^ 1) | 8.305647840531562e-07
+EGFR(Y1068=P ^ 1).Grb2(SH2 ^ 1) &gt; EGFR(Y1068=P) + Grb2(SH2) | 0.05
+Grb2(SH3) + Sos1(PxxP) &gt; Grb2(SH3 ^ 1).Sos1(PxxP ^ 1) | 5.537098560354375e-06
+Grb2(SH3 ^ 1).Sos1(PxxP ^ 1) &gt; Grb2(SH3) + Sos1(PxxP) | 0.06
+EGF(R ^ 1).EGF(R ^ 2).EGFR(L ^ 1, CR1 ^ 3).EGFR(L ^ 2, CR1 ^ 3) &gt;  | 0.01
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">y0</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;EGF(R)&quot;</span><span class="p">:</span> <span class="n">EGF_init</span><span class="p">,</span> <span class="s2">&quot;EGFR(L,CR1,Y1068=U)&quot;</span><span class="p">:</span> <span class="n">EGFR_init</span><span class="p">,</span> <span class="s2">&quot;Grb2(SH2,SH3)&quot;</span><span class="p">:</span> <span class="n">Grb2_init</span><span class="p">,</span> <span class="s2">&quot;Sos1(PxxP)&quot;</span><span class="p">:</span> <span class="n">Sos1_init</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">m2</span> <span class="o">=</span> <span class="n">m1</span><span class="o">.</span><span class="n">expand</span><span class="p">([</span><span class="n">Species</span><span class="p">(</span><span class="n">serial</span><span class="p">)</span> <span class="k">for</span> <span class="n">serial</span> <span class="ow">in</span> <span class="n">y0</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> species and </span><span class="si">{}</span><span class="s2"> reactions were generated.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">list_species</span><span class="p">()),</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">reaction_rules</span><span class="p">())))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+22 species and 86 reactions were generated.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">show</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3^2).Sos1(PxxP^2) | {}
+EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) | {}
+EGFR(CR1,L,Y1068=P) | {}
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) | {}
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) | {}
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) | {}
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=U).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) | {}
+EGF(R^1).EGFR(CR1,L^1,Y1068=U) | {}
+Grb2(SH2,SH3^1).Sos1(PxxP^1) | {}
+EGF(R) | {}
+EGFR(CR1,L,Y1068=U) | {}
+Grb2(SH2,SH3) | {}
+Sos1(PxxP) | {}
+
+EGF(R) + EGFR(CR1,L,Y1068=U) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=U) | 1.495016611295681e-06
+Grb2(SH2,SH3) + Sos1(PxxP) &gt; Grb2(SH2,SH3^1).Sos1(PxxP^1) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=U) &gt; EGF(R) + EGFR(CR1,L,Y1068=U) | 0.06
+EGF(R^1).EGFR(CR1,L^1,Y1068=U) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=U).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) | 2.7685492801771873e-06
+Grb2(SH2,SH3^1).Sos1(PxxP^1) &gt; Grb2(SH2,SH3) + Sos1(PxxP) | 0.06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=U).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=U) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=U).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) | 1.0
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=U).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) &gt;  | 0.01
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) | 0.5
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=U).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) | 4.505
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) + Grb2(SH2,SH3^1).Sos1(PxxP^1) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) + Grb2(SH2,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) &gt;  | 0.01
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) &gt; EGF(R) + EGFR(CR1,L,Y1068=P) | 0.06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=P) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) | 2.7685492801771873e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=P) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) | 0.5
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) | 0.5
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=U) | 4.505
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) | 9.01
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) + Grb2(SH2,SH3^1).Sos1(PxxP^1) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) + Grb2(SH2,SH3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) + Grb2(SH2,SH3^1).Sos1(PxxP^1) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) | 1.6611295681063123e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) + Grb2(SH2,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) | 1.6611295681063123e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) + Grb2(SH2,SH3^1).Sos1(PxxP^1) | 0.05
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=U).EGF(R^3) + Grb2(SH2,SH3) | 0.05
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) + Sos1(PxxP) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) + Sos1(PxxP) | 0.06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) &gt;  | 0.01
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) &gt;  | 0.01
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) &gt;  | 0.01
+EGF(R) + EGFR(CR1,L,Y1068=P) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P) | 1.495016611295681e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) &gt; EGF(R) + EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3^2).Sos1(PxxP^2) | 0.06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) &gt; EGF(R) + EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3) | 0.06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) | 2.7685492801771873e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) | 2.7685492801771873e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + EGF(R^1).EGFR(CR1,L^1,Y1068=U) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) | 0.1
+EGFR(CR1,L,Y1068=P) &gt; EGFR(CR1,L,Y1068=U) | 4.505
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3^5).Sos1(PxxP^5) | 4.505
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=U).EGF(R^4).Grb2(SH2^3,SH3) | 4.505
+EGFR(CR1,L,Y1068=P) + Grb2(SH2,SH3^1).Sos1(PxxP^1) &gt; EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3^2).Sos1(PxxP^2) | 8.305647840531562e-07
+EGFR(CR1,L,Y1068=P) + Grb2(SH2,SH3) &gt; EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) + Grb2(SH2,SH3^1).Sos1(PxxP^1) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) + Grb2(SH2,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) + Grb2(SH2,SH3^1).Sos1(PxxP^1) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) + Grb2(SH2,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) | 8.305647840531562e-07
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P) + Grb2(SH2,SH3^1).Sos1(PxxP^1) | 0.05
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P) + Grb2(SH2,SH3) | 0.05
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) + Grb2(SH2,SH3^1).Sos1(PxxP^1) | 0.05
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P).EGF(R^3) + Grb2(SH2,SH3) | 0.05
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + Sos1(PxxP) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) + Sos1(PxxP) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + Sos1(PxxP) | 0.06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) + Sos1(PxxP) | 0.06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) &gt;  | 0.01
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) &gt;  | 0.01
+EGF(R) + EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3^2).Sos1(PxxP^2) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) | 1.495016611295681e-06
+EGF(R) + EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) | 1.495016611295681e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3^3).Sos1(PxxP^3) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) &gt; EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) + EGF(R^1).EGFR(CR1,L^1,Y1068=P^2).Grb2(SH2^2,SH3) | 0.1
+EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3^2).Sos1(PxxP^2) &gt; EGFR(CR1,L,Y1068=P) + Grb2(SH2,SH3^1).Sos1(PxxP^1) | 0.05
+EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3) &gt; EGFR(CR1,L,Y1068=P) + Grb2(SH2,SH3) | 0.05
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) + Grb2(SH2,SH3^1).Sos1(PxxP^1) | 0.1
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) + Grb2(SH2,SH3^1).Sos1(PxxP^1) | 0.05
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3^5).Sos1(PxxP^5) + Grb2(SH2,SH3) | 0.05
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P).EGFR(CR1^2,L^3,Y1068=P^4).EGF(R^3).Grb2(SH2^4,SH3) + Grb2(SH2,SH3) | 0.1
+EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3) + Sos1(PxxP) &gt; EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3^2).Sos1(PxxP^2) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) + Sos1(PxxP) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) | 5.537098560354375e-06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) + Sos1(PxxP) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) | 1.107419712070875e-05
+EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3^2).Sos1(PxxP^2) &gt; EGFR(CR1,L,Y1068=P^1).Grb2(SH2^1,SH3) + Sos1(PxxP) | 0.06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) + Sos1(PxxP) | 0.12
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) &gt; EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) + Sos1(PxxP) | 0.06
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3^6).Sos1(PxxP^6).Grb2(SH2^3,SH3^7).Sos1(PxxP^7) &gt;  | 0.01
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3^6).Sos1(PxxP^6) &gt;  | 0.01
+EGF(R^1).EGFR(CR1^2,L^1,Y1068=P^3).EGFR(CR1^2,L^4,Y1068=P^5).EGF(R^4).Grb2(SH2^5,SH3).Grb2(SH2^3,SH3) &gt;  | 0.01
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ret</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">m2</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="n">y0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ret</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">[</span>
+    <span class="s2">&quot;EGFR&quot;</span><span class="p">,</span> <span class="s2">&quot;EGF(R)&quot;</span><span class="p">,</span> <span class="s2">&quot;EGFR(CR1^_)&quot;</span><span class="p">,</span> <span class="s2">&quot;EGFR(Y1068=P^_0)&quot;</span><span class="p">,</span> <span class="s2">&quot;Grb2(SH2, SH3^1).Sos1(PxxP^1)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EGFR(Y1068^1).Grb2(SH2^1, SH3^2).Sos1(PxxP^2)&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example04_11_0.png" src="../_images/examples_example04_11_0.png" />
+</div>
+</div>
+</div>
+
+  <div class="t-pagination clearfix">
+    <span>
+      ← <a href="example03.html" title="Dual Phosphorylation Cycle">Dual Phosphorylation Cycle</a>
+    </span>
+    <span style="float:right">
+      <a href="example05.html" title="Glycolysis Model and Metabolic Control Analysis">Glycolysis Model and...</a> →
+    </span>
+  </div>
+
+    </div><footer class="t-foot">
+    &copy; Copyright 2015-, E-Cell project.
+    <br>
+    A <a href="https://typlog.com/">typlog</a> <a href="https://github.com/typlog/sphinx-typlog-theme">sphinx theme</a>,
+    designed by <a href="https://lepture.com/">Hsiaoming Yang</a>.
+</footer>
+  </div>
+  <script>$(function(){$(".t-head_menu").on("click",function(){$("body").addClass("_expand")});$(".t-body").on("click",function(){$("body").removeClass("_expand")});$(".t-sidebar_close").on("click",function(){$("body").removeClass("_expand")});$("a.footnote-reference").on("click",function(e){e.preventDefault();var id=$(this).attr("href");var html=$(id).find("td.label + td").html();var w=Math.max(document.documentElement.clientWidth,window.innerWidth||0);var style="top:"+e.pageY+"px;";if(w>560){style+="width:480px;";if(e.pageX>240&&e.pageX+240<w){style+="left:"+(e.pageX-240)+"px;"}else if(e.pageX<=240){style+="left:20px;"}else{style+="right:20px;"}}showFootnote(html,style)});function showFootnote(html,style){var CONTENT_ID="typlog-footnote-content";var content=document.getElementById(CONTENT_ID);if(!content){content=document.createElement("div");content.id=CONTENT_ID;$(".t-body").append(content)}var MASK_ID="typlog-footnote-mask";var mask=document.getElementById(MASK_ID);if(!mask){mask=document.createElement("div");mask.id=MASK_ID;document.body.appendChild(mask);mask.addEventListener("click",function(){content.className="";mask.className=""})}content.innerHTML=html;content.setAttribute("style",style);content.className="_active";mask.className="_active"}function fetchGitHubRepo(repo){var url="https://api.github.com/repos/"+repo;$.getJSON(url,function(data){var counts=[+new Date,data.stargazers_count,data.forks_count];localStorage.setItem("gh:"+repo,JSON.stringify(counts));updateGitHubStats(counts[1],counts[2])})}function updateGitHubStats(stars,forks){$(".github_stars strong").text(stars);$(".github_forks strong").text(forks)}function initGitHub(url){if(!url){return}var repo=url.replace("https://github.com/","");var cache=localStorage.getItem("gh:"+repo);if(cache){try{var counts=JSON.parse(cache);updateGitHubStats(counts[1],counts[2]);var delta=new Date-counts[0];if(delta<0||delta>9e5){fetchGitHubRepo(repo)}}catch(error){fetchGitHubRepo(repo)}}else{fetchGitHubRepo(repo)}}initGitHub($(".github").attr("href"))});</script>
+</body>
+</html>
